@@ -1,0 +1,7 @@
+node_modules
+dist
+.next
+*.config.js
+*.config.ts
+package-lock.json
+yarn.lock

@@ -1,0 +1,60 @@
+[
+  {
+    "source": "Protocol Abbrev",
+    "target": "name"
+  },
+  { "source": "IRB No.", "target": "data.identification.irbNumber" },
+  {
+    "source": "Protocol Abbrev",
+    "target": "data.identification.orgStudyId"
+  },
+  {
+    "source": "Secondary Protocol No.",
+    "target": "data.identification.orgStudyId2"
+  },
+  {
+    "source": "Title (full)",
+    "target": ["data.title"]
+  },
+  { "source": "Title (full)", "target": "data.subtitle" },
+  {
+    "source": "Principal Investigator",
+    "target": "data.contactsLocations.principalInvestigator"
+  },
+  {
+    "source": "Sub Investigators",
+    "target": "data.contactsLocations.subInvestigators",
+    "split": ";",
+    "asArrayOfObjects": { "name": true }
+  },
+  { "source": "Phase", "target": "data.description.phase" },
+  { "source": "Age Group", "target": "data.eligibility.ageGroup" },
+
+  { "source": "Objective", "target": "data.description.objective" },
+  {
+    "source": "Therapies Involved",
+    "target": "data.description.interventions",
+    "split": ";"
+  },
+  { "source": "Key Eligibility", "target": "data.eligibility.criteria" },
+  { "source": "Condition", "target": "data.description.conditions" },
+  {
+    "source": "Treatment",
+    "target": "data.description.interventions",
+    "split": ";",
+    "append": true
+  },
+  {
+    "source": "Contact",
+    "target": "data.contactsLocations.contacts",
+    "split": ";",
+    "asArrayOfObjects": { "name": true }
+  },
+  {
+    "source": "Phone",
+    "target": "data.contactsLocations.phoneNumbers",
+    "split": ";",
+    "asArrayOfObjects": { "number": true }
+  },
+  { "source": "ClinicalTrials.gov ID", "target": "data.identification.nctId" }
+]

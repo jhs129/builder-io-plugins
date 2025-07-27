@@ -1,0 +1,981 @@
+{
+    "protocolSection": {
+      "identificationModule": {
+        "nctId": "NCT06077500",
+        "orgStudyIdInfo": {
+          "id": "1438-0008"
+        },
+        "organization": {
+          "fullName": "Boehringer Ingelheim",
+          "class": "INDUSTRY"
+        },
+        "briefTitle": "DAREONᵀᴹ-8: A Study to Test How Well Different Doses of BI 764532 in Addition to Standard of Care Are Tolerated by People With Advanced Small Cell Lung Cancer",
+        "officialTitle": "DAREONᵀᴹ-8: A Phase I, Open-label, Dose Escalation and Expansion Trial of Repeated Intravenous Infusions of BI 764532 Combined With Standard of Care (Platinium, Etoposide, and Anti-PD-L1) in Patients With Extensive-stage Small Cell Lung Carcinoma",
+        "acronym": "DAREONᵀᴹ-8"
+      },
+      "statusModule": {
+        "statusVerifiedDate": "2025-05",
+        "overallStatus": "RECRUITING",
+        "expandedAccessInfo": {
+          "hasExpandedAccess": false
+        },
+        "startDateStruct": {
+          "date": "2024-02-14",
+          "type": "ACTUAL"
+        },
+        "primaryCompletionDateStruct": {
+          "date": "2025-08-20",
+          "type": "ESTIMATED"
+        },
+        "completionDateStruct": {
+          "date": "2026-06-25",
+          "type": "ESTIMATED"
+        },
+        "studyFirstSubmitDate": "2023-10-05",
+        "studyFirstSubmitQcDate": "2023-10-05",
+        "studyFirstPostDateStruct": {
+          "date": "2023-10-11",
+          "type": "ACTUAL"
+        },
+        "lastUpdateSubmitDate": "2025-05-27",
+        "lastUpdatePostDateStruct": {
+          "date": "2025-05-28",
+          "type": "ESTIMATED"
+        }
+      },
+      "sponsorCollaboratorsModule": {
+        "responsibleParty": {
+          "type": "SPONSOR"
+        },
+        "leadSponsor": {
+          "name": "Boehringer Ingelheim",
+          "class": "INDUSTRY"
+        }
+      },
+      "oversightModule": {
+        "oversightHasDmc": false,
+        "isFdaRegulatedDrug": true,
+        "isFdaRegulatedDevice": false
+      },
+      "descriptionModule": {
+        "briefSummary": "This study is open to adults with extensive stage small cell lung cancer. The study is in people with advanced cancer that are eligible for standard of care including chemotherapy and anti-PD-L1 (Programmed Cell Death Ligand 1) immunotherapy.\n\nThe purpose of this study is to find out the highest dose of BI 764532 that people can tolerate when taken together with standard of care. BI 764532 is an antibody-like molecule that may help the immune system fight cancer. Participants get BI 764532 and different standard treatments as infusions into a vein.\n\nIf there is benefit for the participants and if they can tolerate it, the treatment is given for the entire duration of the study. During this time, participants visit the study site regularly. The visits also depend on the response to the treatment. At the study visits, the doctors check the health of the participants, take necessary laboratory tests, and note any health problems that could have been caused by the study treatment."
+      },
+      "conditionsModule": {
+        "conditions": [
+          "Small Cell Lung Carcinoma (SCLC)"
+        ]
+      },
+      "designModule": {
+        "studyType": "INTERVENTIONAL",
+        "phases": [
+          "PHASE1"
+        ],
+        "designInfo": {
+          "allocation": "NON_RANDOMIZED",
+          "interventionModel": "SEQUENTIAL",
+          "primaryPurpose": "TREATMENT",
+          "maskingInfo": {
+            "masking": "NONE"
+          }
+        },
+        "enrollmentInfo": {
+          "count": 60,
+          "type": "ESTIMATED"
+        }
+      },
+      "armsInterventionsModule": {
+        "armGroups": [
+          {
+            "label": "Part A - Dose escalation: BI 764532 very low dose + carboplatin + etoposide + atezolizumab",
+            "type": "EXPERIMENTAL",
+            "interventionNames": [
+              "Drug: BI 764532",
+              "Drug: Carboplatin",
+              "Drug: Etoposide",
+              "Drug: Atezolizumab"
+            ]
+          },
+          {
+            "label": "Part A - Dose escalation: BI 764532 low dose + carboplatin + etoposide + atezolizumab",
+            "type": "EXPERIMENTAL",
+            "interventionNames": [
+              "Drug: BI 764532",
+              "Drug: Carboplatin",
+              "Drug: Etoposide",
+              "Drug: Atezolizumab"
+            ]
+          },
+          {
+            "label": "Part A - Dose escalation: BI 764532 medium dose + carboplatin + etoposide + atezolizumab",
+            "type": "EXPERIMENTAL",
+            "interventionNames": [
+              "Drug: BI 764532",
+              "Drug: Carboplatin",
+              "Drug: Etoposide",
+              "Drug: Atezolizumab"
+            ]
+          },
+          {
+            "label": "Part A - Dose escalation: BI 764532 high dose + carboplatin + etoposide + atezolizumab",
+            "type": "EXPERIMENTAL",
+            "interventionNames": [
+              "Drug: BI 764532",
+              "Drug: Carboplatin",
+              "Drug: Etoposide",
+              "Drug: Atezolizumab"
+            ]
+          },
+          {
+            "label": "Part B - Dose expansion: BI 764532 + carboplatin + etoposide + atezolizumab",
+            "type": "EXPERIMENTAL",
+            "interventionNames": [
+              "Drug: BI 764532",
+              "Drug: Carboplatin",
+              "Drug: Etoposide",
+              "Drug: Atezolizumab"
+            ]
+          },
+          {
+            "label": "Part B - Dose expansion: BI 764532 + carboplatin + etoposide + durvalumab",
+            "type": "EXPERIMENTAL",
+            "interventionNames": [
+              "Drug: BI 764532",
+              "Drug: Carboplatin",
+              "Drug: Etoposide",
+              "Drug: Durvalumab"
+            ]
+          },
+          {
+            "label": "Part B - Dose expansion: BI 764532 + cisplatin + etoposide + durvalumab",
+            "type": "EXPERIMENTAL",
+            "interventionNames": [
+              "Drug: BI 764532",
+              "Drug: Etoposide",
+              "Drug: Durvalumab",
+              "Drug: Cisplatin"
+            ]
+          }
+        ],
+        "interventions": [
+          {
+            "type": "DRUG",
+            "name": "BI 764532",
+            "description": "BI 764532",
+            "armGroupLabels": [
+              "Part A - Dose escalation: BI 764532 high dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 low dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 medium dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 very low dose + carboplatin + etoposide + atezolizumab",
+              "Part B - Dose expansion: BI 764532 + carboplatin + etoposide + atezolizumab",
+              "Part B - Dose expansion: BI 764532 + carboplatin + etoposide + durvalumab",
+              "Part B - Dose expansion: BI 764532 + cisplatin + etoposide + durvalumab"
+            ],
+            "otherNames": [
+              "Obrixtamig"
+            ]
+          },
+          {
+            "type": "DRUG",
+            "name": "Carboplatin",
+            "description": "Carboplatin",
+            "armGroupLabels": [
+              "Part A - Dose escalation: BI 764532 high dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 low dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 medium dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 very low dose + carboplatin + etoposide + atezolizumab",
+              "Part B - Dose expansion: BI 764532 + carboplatin + etoposide + atezolizumab",
+              "Part B - Dose expansion: BI 764532 + carboplatin + etoposide + durvalumab"
+            ]
+          },
+          {
+            "type": "DRUG",
+            "name": "Etoposide",
+            "description": "Etoposide",
+            "armGroupLabels": [
+              "Part A - Dose escalation: BI 764532 high dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 low dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 medium dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 very low dose + carboplatin + etoposide + atezolizumab",
+              "Part B - Dose expansion: BI 764532 + carboplatin + etoposide + atezolizumab",
+              "Part B - Dose expansion: BI 764532 + carboplatin + etoposide + durvalumab",
+              "Part B - Dose expansion: BI 764532 + cisplatin + etoposide + durvalumab"
+            ]
+          },
+          {
+            "type": "DRUG",
+            "name": "Atezolizumab",
+            "description": "Atezolizumab",
+            "armGroupLabels": [
+              "Part A - Dose escalation: BI 764532 high dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 low dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 medium dose + carboplatin + etoposide + atezolizumab",
+              "Part A - Dose escalation: BI 764532 very low dose + carboplatin + etoposide + atezolizumab",
+              "Part B - Dose expansion: BI 764532 + carboplatin + etoposide + atezolizumab"
+            ]
+          },
+          {
+            "type": "DRUG",
+            "name": "Durvalumab",
+            "description": "Durvalumab",
+            "armGroupLabels": [
+              "Part B - Dose expansion: BI 764532 + carboplatin + etoposide + durvalumab",
+              "Part B - Dose expansion: BI 764532 + cisplatin + etoposide + durvalumab"
+            ]
+          },
+          {
+            "type": "DRUG",
+            "name": "Cisplatin",
+            "description": "Cisplatin",
+            "armGroupLabels": [
+              "Part B - Dose expansion: BI 764532 + cisplatin + etoposide + durvalumab"
+            ]
+          }
+        ]
+      },
+      "outcomesModule": {
+        "primaryOutcomes": [
+          {
+            "measure": "Part A - Dose escalation: Occurrence of dose limiting toxicities (DLTs) in the maximum tolerated dose (MTD) evaluation period",
+            "timeFrame": "up to 6 weeks"
+          },
+          {
+            "measure": "Part B - Dose expansion: Occurrence of dose limiting toxicities (DLTs) during the on-treatment period",
+            "timeFrame": "up to 23 months"
+          }
+        ],
+        "secondaryOutcomes": [
+          {
+            "measure": "Part A - Dose escalation: Occurrence of dose limiting toxicities (DLTs) during the on-treatment period",
+            "timeFrame": "up to 23 months"
+          },
+          {
+            "measure": "Part A - Dose escalation: Occurrence of adverse events (AEs) during the on-treatment period",
+            "timeFrame": "up to 23 months"
+          },
+          {
+            "measure": "Part B - Dose expansion: Objective response (OR)",
+            "description": "OR is defined as a best overall response of confirmed complete response (CR) or confirmed partial response (PR) according to RECIST 1.1 (based on investigator's assessment) from the date of treatment start until the earliest date of disease progression, death, or last evaluable tumour assessment before start of subsequent anti-cancer therapy, loss to follow-up, or withdrawal of consent",
+            "timeFrame": "up to 23 months"
+          },
+          {
+            "measure": "Part B - Dose expansion: Duration of response (DoR)",
+            "description": "DoR is defined as the time from first documented confirmed objective response (OR) until the earliest date of disease progression or death among patients with confirmed objective response",
+            "timeFrame": "up to 23 months"
+          }
+        ]
+      },
+      "eligibilityModule": {
+        "eligibilityCriteria": "Inclusion Criteria:\n\n* Male or female participants ≥18 years old and at least at the legal age of consent in countries where it is greater than 18 years at the time of signature of the informed consent form (ICF)\n* Signed and dated written informed consent in accordance with International Council for Harmonisation-Good Clinical Practice (ICH-GCP) and local legislation prior to admission to the trial\n* Histologically or cytologically confirmed extensive-stage small cell lung carcinoma (ES-SCLC)\n* Availability of archival tumour tissue\n* Patients must be eligible for platinum+etoposide+anti-Programmed Cell Death Ligand 1 (PD-L1) regimen as first line standard of care (SoC) treatment:\n\n  * In Part A, patients must be eligible to receive carboplatin + etoposide + atezolizumab\n  * In Part B, patients must be eligible to receive etoposide, carboplatin or cisplatin, and atezolizumab or durvalumab\n* No prior systemic treatment for ES-SCLC\n* Prior systematic anti-cancer treatment for limited-stage small cell lung cancer (SCLC) must have been complete at least 6 months prior to the diagnosis of ES-SCLC\n* Eastern Cooperative Oncology Group (ECOG) performance status of 0-1 Further inclusion criteria apply.\n\nExclusion Criteria:\n\n* Previous treatment in this trial\n* Treatment with a systemic anti-cancer therapy or investigational drug within 28 days or 5 half-lives (whichever is longer) of the first administration of trial medication\n* Presence of leptomeningeal carcinomatosis\n* Previous treatment with Delta-like ligand 3 (DLL3)-targeting T cell engagers and cell therapies\n* Patients who have been treated with extensive field radiotherapy including whole brain irradiation within 2 weeks prior to first administration of BI 764532\n* Persistent toxicity from previous treatments that has not resolved to ≤ Common Terminology Criteria for Adverse Events (CTCAE) Grade 1 (except for alopecia, asthenia/fatigue, CTCAE Grade 2 neuropathy, or Grade 2 endocrinopathies controlled by replacement therapy)\n* Major surgery (major according to the investigator's assessment) within 28 days prior to first administration of BI 764532 or planned during treatment period, e.g. hip replacement\n* Any documented active or suspected malignancy or history of malignancy within 5 years prior to Screening (other than the target indication), except for appropriately treated basal cell carcinoma of the skin or in situ carcinoma of uterine cervix Further exclusion criteria apply.",
+        "healthyVolunteers": false,
+        "sex": "ALL",
+        "minimumAge": "18 Years",
+        "stdAges": [
+          "ADULT",
+          "OLDER_ADULT"
+        ]
+      },
+      "contactsLocationsModule": {
+        "centralContacts": [
+          {
+            "name": "Boehringer Ingelheim",
+            "role": "CONTACT",
+            "phone": "1-800-243-0127",
+            "email": "clintriage.rdg@boehringer-ingelheim.com"
+          }
+        ],
+        "locations": [
+          {
+            "facility": "Orlando Health Cancer Institute",
+            "status": "RECRUITING",
+            "city": "Orlando",
+            "state": "Florida",
+            "zip": "32806",
+            "country": "United States",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "833-602-2368",
+                "email": "unitedstates@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 28.53834,
+              "lon": -81.37924
+            }
+          },
+          {
+            "facility": "Emory University",
+            "status": "RECRUITING",
+            "city": "Atlanta",
+            "state": "Georgia",
+            "zip": "30322",
+            "country": "United States",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "833-602-2368",
+                "email": "unitedstates@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 33.749,
+              "lon": -84.38798
+            }
+          },
+          {
+            "facility": "Brussels - UNIV Saint-Luc",
+            "status": "NOT_YET_RECRUITING",
+            "city": "Bruxelles",
+            "zip": "1200",
+            "country": "Belgium",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "080049616",
+                "email": "belgique@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 50.85045,
+              "lon": 4.34878
+            }
+          },
+          {
+            "facility": "Kortrijk - HOSP AZ Groeninge Kennedylaan",
+            "status": "RECRUITING",
+            "city": "Kortrijk",
+            "zip": "8500",
+            "country": "Belgium",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "080049616",
+                "email": "belgique@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 50.82803,
+              "lon": 3.26487
+            }
+          },
+          {
+            "facility": "INS Bergonie",
+            "status": "RECRUITING",
+            "city": "Bordeaux",
+            "zip": "33000",
+            "country": "France",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "0805102354",
+                "email": "france@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 44.84044,
+              "lon": -0.5805
+            }
+          },
+          {
+            "facility": "HOP Louis Pradel",
+            "status": "NOT_YET_RECRUITING",
+            "city": "Bron",
+            "zip": "69677",
+            "country": "France",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "0805102354",
+                "email": "france@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 45.73333,
+              "lon": 4.91667
+            }
+          },
+          {
+            "facility": "HOP Civil",
+            "status": "RECRUITING",
+            "city": "Strasbourg",
+            "zip": "67091",
+            "country": "France",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "0805102354",
+                "email": "france@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 48.58392,
+              "lon": 7.74553
+            }
+          },
+          {
+            "facility": "INS Gustave Roussy",
+            "status": "RECRUITING",
+            "city": "Villejuif",
+            "zip": "94805",
+            "country": "France",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "0805102354",
+                "email": "france@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 48.7939,
+              "lon": 2.35992
+            }
+          },
+          {
+            "facility": "Universitätsklinikum Gießen und Marburg GmbH",
+            "status": "NOT_YET_RECRUITING",
+            "city": "Gießen",
+            "zip": "35392",
+            "country": "Germany",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "08007234742",
+                "email": "deutschland@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 50.58727,
+              "lon": 8.67554
+            }
+          },
+          {
+            "facility": "Saitama Medical University International Medical Center",
+            "status": "RECRUITING",
+            "city": "Saitama, Hidaka",
+            "zip": "350-1298",
+            "country": "Japan",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "0120201230",
+                "email": "nippon@bitrialsupport.com"
+              }
+            ]
+          },
+          {
+            "facility": "Hamamatsu University Hospital",
+            "status": "RECRUITING",
+            "city": "Shizuoka, Hamamatsu",
+            "zip": "431-3192",
+            "country": "Japan",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "0120201230",
+                "email": "nippon@bitrialsupport.com"
+              }
+            ]
+          },
+          {
+            "facility": "National Cancer Center Hospital",
+            "status": "RECRUITING",
+            "city": "Tokyo, Chuo-ku",
+            "zip": "104-0045",
+            "country": "Japan",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "0120201230",
+                "email": "nippon@bitrialsupport.com"
+              }
+            ]
+          },
+          {
+            "facility": "Japanese Foundation for Cancer Research",
+            "status": "RECRUITING",
+            "city": "Tokyo, Koto-ku",
+            "zip": "135-8550",
+            "country": "Japan",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "0120201230",
+                "email": "nippon@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 35.66667,
+              "lon": 139.81718
+            }
+          },
+          {
+            "facility": "Medical University Gdansk",
+            "status": "RECRUITING",
+            "city": "Gdansk",
+            "zip": "80-214",
+            "country": "Poland",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "008001218830",
+                "email": "polska@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 54.35205,
+              "lon": 18.64637
+            }
+          },
+          {
+            "facility": "Polish Mother's Memorial Hospital - Research Institute",
+            "status": "RECRUITING",
+            "city": "Lodz",
+            "zip": "93-338",
+            "country": "Poland",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "008001218830",
+                "email": "polska@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 51.75,
+              "lon": 19.46667
+            }
+          },
+          {
+            "facility": "MED POLONIA SP Z O O, Clinical Trials Department,Poznan",
+            "status": "RECRUITING",
+            "city": "Poznan",
+            "zip": "60-693",
+            "country": "Poland",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "008001218830",
+                "email": "polska@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 52.40692,
+              "lon": 16.92993
+            }
+          },
+          {
+            "facility": "Hospital Ramón y Cajal",
+            "status": "RECRUITING",
+            "city": "Madrid",
+            "zip": "28034",
+            "country": "Spain",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "900876092",
+                "email": "espana@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 40.4165,
+              "lon": -3.70256
+            }
+          },
+          {
+            "facility": "Fundación Jiménez Díaz",
+            "status": "RECRUITING",
+            "city": "Madrid",
+            "zip": "28040",
+            "country": "Spain",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "900876092",
+                "email": "espana@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 40.4165,
+              "lon": -3.70256
+            }
+          },
+          {
+            "facility": "Hospital Virgen Macarena",
+            "status": "RECRUITING",
+            "city": "Sevilla",
+            "zip": "41009",
+            "country": "Spain",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "900876092",
+                "email": "espana@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 37.38283,
+              "lon": -5.97317
+            }
+          },
+          {
+            "facility": "Instituto Valenciano de Oncología",
+            "status": "RECRUITING",
+            "city": "Valencia",
+            "zip": "46009",
+            "country": "Spain",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "900876092",
+                "email": "espana@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 39.46975,
+              "lon": -0.37739
+            }
+          },
+          {
+            "facility": "Hospital Clínico de Valencia",
+            "status": "NOT_YET_RECRUITING",
+            "city": "Valencia",
+            "zip": "46010",
+            "country": "Spain",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "900876092",
+                "email": "espana@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 39.46975,
+              "lon": -0.37739
+            }
+          },
+          {
+            "facility": "University Hospital of Lausanne",
+            "status": "RECRUITING",
+            "city": "Lausanne",
+            "zip": "1011",
+            "country": "Switzerland",
+            "contacts": [
+              {
+                "name": "Boehringer Ingelheim",
+                "role": "CONTACT",
+                "phone": "0800005900",
+                "email": "suisse@bitrialsupport.com"
+              }
+            ],
+            "geoPoint": {
+              "lat": 46.516,
+              "lon": 6.63282
+            }
+          }
+        ]
+      },
+      "referencesModule": {
+        "seeAlsoLinks": [
+          {
+            "label": "Related Info",
+            "url": "https://www.mystudywindow.com"
+          }
+        ]
+      },
+      "ipdSharingStatementModule": {
+        "ipdSharing": "YES",
+        "description": "Once the criteria in section \"Time Frame\" are fulfilled, researchers can use the following link https://www.mystudywindow.com/msw/datasharing to request access to the clinical study documents regarding this study, and upon a signed \"Document Sharing Agreement\".\n\nFurthermore, researchers can request access to the clinical study data, for this and other listed studies, after the submission of a research proposal and according to the terms outlined in the website.",
+        "infoTypes": [
+          "STUDY_PROTOCOL",
+          "SAP",
+          "CSR"
+        ],
+        "timeFrame": "After structured results have been posted, all regulatory activities are completed in the US and EU for the product and indication, and after the primary manuscript has been accepted for publication.",
+        "accessCriteria": "For study documents - upon signing of a 'Document Sharing Agreement'. For study data - 1. after the submission and approval of the research proposal (checks will be performed by the sponsor and/or the independent review panel, including checking that the planned analysis does not compete with sponsor's publication plan); 2. and upon signing of a legal agreement.",
+        "url": "https://www.mystudywindow.com/msw/datasharing"
+      }
+    },
+    "derivedSection": {
+      "miscInfoModule": {
+        "versionHolder": "2025-05-28"
+      },
+      "conditionBrowseModule": {
+        "meshes": [
+          {
+            "id": "D002277",
+            "term": "Carcinoma"
+          },
+          {
+            "id": "D008175",
+            "term": "Lung Neoplasms"
+          },
+          {
+            "id": "D055752",
+            "term": "Small Cell Lung Carcinoma"
+          }
+        ],
+        "ancestors": [
+          {
+            "id": "D009375",
+            "term": "Neoplasms, Glandular and Epithelial"
+          },
+          {
+            "id": "D009370",
+            "term": "Neoplasms by Histologic Type"
+          },
+          {
+            "id": "D009369",
+            "term": "Neoplasms"
+          },
+          {
+            "id": "D012142",
+            "term": "Respiratory Tract Neoplasms"
+          },
+          {
+            "id": "D013899",
+            "term": "Thoracic Neoplasms"
+          },
+          {
+            "id": "D009371",
+            "term": "Neoplasms by Site"
+          },
+          {
+            "id": "D008171",
+            "term": "Lung Diseases"
+          },
+          {
+            "id": "D012140",
+            "term": "Respiratory Tract Diseases"
+          },
+          {
+            "id": "D002283",
+            "term": "Carcinoma, Bronchogenic"
+          },
+          {
+            "id": "D001984",
+            "term": "Bronchial Neoplasms"
+          }
+        ],
+        "browseLeaves": [
+          {
+            "id": "M11172",
+            "name": "Lung Neoplasms",
+            "asFound": "Lung Carcinoma",
+            "relevance": "HIGH"
+          },
+          {
+            "id": "M28323",
+            "name": "Small Cell Lung Carcinoma",
+            "asFound": "Small Cell Lung Carcinoma",
+            "relevance": "HIGH"
+          },
+          {
+            "id": "M5534",
+            "name": "Carcinoma",
+            "asFound": "Carcinoma",
+            "relevance": "HIGH"
+          },
+          {
+            "id": "M12320",
+            "name": "Neoplasms, Glandular and Epithelial",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M12315",
+            "name": "Neoplasms by Histologic Type",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M14979",
+            "name": "Respiratory Tract Neoplasms",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M16658",
+            "name": "Thoracic Neoplasms",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M11168",
+            "name": "Lung Diseases",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M14977",
+            "name": "Respiratory Tract Diseases",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M5540",
+            "name": "Carcinoma, Bronchogenic",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M5260",
+            "name": "Bronchial Neoplasms",
+            "relevance": "LOW"
+          },
+          {
+            "id": "T5271",
+            "name": "Small Cell Lung Cancer",
+            "asFound": "Small Cell Lung Carcinoma",
+            "relevance": "HIGH"
+          }
+        ],
+        "browseBranches": [
+          {
+            "abbrev": "BC04",
+            "name": "Neoplasms"
+          },
+          {
+            "abbrev": "BC08",
+            "name": "Respiratory Tract (Lung and Bronchial) Diseases"
+          },
+          {
+            "abbrev": "All",
+            "name": "All Conditions"
+          },
+          {
+            "abbrev": "Rare",
+            "name": "Rare Diseases"
+          }
+        ]
+      },
+      "interventionBrowseModule": {
+        "meshes": [
+          {
+            "id": "D016190",
+            "term": "Carboplatin"
+          },
+          {
+            "id": "D005047",
+            "term": "Etoposide"
+          },
+          {
+            "id": "C000594389",
+            "term": "Atezolizumab"
+          },
+          {
+            "id": "C000613593",
+            "term": "Durvalumab"
+          }
+        ],
+        "ancestors": [
+          {
+            "id": "D000970",
+            "term": "Antineoplastic Agents"
+          },
+          {
+            "id": "D000972",
+            "term": "Antineoplastic Agents, Phytogenic"
+          },
+          {
+            "id": "D059005",
+            "term": "Topoisomerase II Inhibitors"
+          },
+          {
+            "id": "D059003",
+            "term": "Topoisomerase Inhibitors"
+          },
+          {
+            "id": "D004791",
+            "term": "Enzyme Inhibitors"
+          },
+          {
+            "id": "D045504",
+            "term": "Molecular Mechanisms of Pharmacological Action"
+          },
+          {
+            "id": "D000082082",
+            "term": "Immune Checkpoint Inhibitors"
+          },
+          {
+            "id": "D000074322",
+            "term": "Antineoplastic Agents, Immunological"
+          }
+        ],
+        "browseLeaves": [
+          {
+            "id": "M272500",
+            "name": "Durvalumab",
+            "asFound": "Acupuncture",
+            "relevance": "HIGH"
+          },
+          {
+            "id": "M18650",
+            "name": "Carboplatin",
+            "asFound": "Total",
+            "relevance": "HIGH"
+          },
+          {
+            "id": "M6182",
+            "name": "Cisplatin",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M349417",
+            "name": "Atezolizumab",
+            "asFound": "Powder",
+            "relevance": "HIGH"
+          },
+          {
+            "id": "M8191",
+            "name": "Etoposide",
+            "asFound": "Information",
+            "relevance": "HIGH"
+          },
+          {
+            "id": "M341643",
+            "name": "Etoposide phosphate",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M7951",
+            "name": "Enzyme Inhibitors",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M2342",
+            "name": "Immune Checkpoint Inhibitors",
+            "relevance": "LOW"
+          },
+          {
+            "id": "M1346",
+            "name": "Antineoplastic Agents, Immunological",
+            "relevance": "LOW"
+          }
+        ],
+        "browseBranches": [
+          {
+            "abbrev": "ANeo",
+            "name": "Antineoplastic Agents"
+          },
+          {
+            "abbrev": "All",
+            "name": "All Drugs and Chemicals"
+          }
+        ]
+      }
+    },
+    "hasResults": false
+  }

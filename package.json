@@ -1,0 +1,40 @@
+{
+  "name": "builder-io-plugins",
+  "version": "1.0.0",
+  "description": "A monorepo for Builder.io plugins",
+  "private": true,
+  "packageManager": "npm@10.0.0",
+  "workspaces": [
+    "plugins/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "clean": "turbo clean",
+    "type-check": "turbo type-check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhs129/builder-io-plugins.git"
+  },
+  "keywords": ["builder.io", "plugins", "monorepo"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhs129/builder-io-plugins/issues"
+  },
+  "homepage": "https://github.com/jhs129/builder-io-plugins#readme",
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "eslint": "^9.32.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.3",
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.5",
+    "typescript": "^5.8.3"
+  }
+}
