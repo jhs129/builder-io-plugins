@@ -1,4 +1,4 @@
-import { ClinicalTrialImporter } from "builder-plugins";
+import { ClinicalTrialImporter } from "@orlandohealth/builder-plugins";
 import appState from "@builder.io/app-context";
 import { pluginId } from "../../utils";
 

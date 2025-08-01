@@ -1,7 +1,7 @@
 {
-  "name": "@jhsdc/builder-admin-tools",
+  "name": "@orlandohealth/clinicaltrials",
   "version": "1.0.0",
-  "description": "Builder.io admin tools for model synchronization and content purging",
+  "description": "Orlando Health Clinical Trials plugin",
   "entry": "plugin",
   "output": "plugin.system.js",
   "main": "dist/plugin.system.js",
@@ -11,14 +11,13 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack-dev-server --mode development",
-    "start": "webpack-dev-server --mode development",
-    "lint": "eslint \"src/**/*.ts*\"",
-    "type-check": "tsc --noEmit",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    "start": "webpack-dev-server --mode development"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@orlandohealth/types": "*",
+    "@orlandohealth/utils": "*",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "@babel/preset-typescript": "^7.26.0",
@@ -52,6 +51,6 @@
     "algoliasearch": "^5.23.4",
     "react-instantsearch": "^7.15.5",
     "react-quill": "^2.0.0",
-    "builder-plugins": "*"
+    "@orlandohealth/builder-plugins": "*"
   }
 }
