@@ -32,40 +32,49 @@ A Builder.io plugin for managing spaces and content with powerful admin features
 - [x] Enhanced error handling for API responses
 - [x] Model data fetching with complete field information
 
-### Phase 5: Model Synchronization (Current)
+### Phase 5: Model Synchronization 
 - [x] Full model synchronization between spaces
 - [x] createModelInSpace() GraphQL mutation implementation
 - [x] Duplicate prevention logic
 - [x] Progress tracking with real-time status updates
 - [x] Multi-space sync support with error resilience
 
+### Phase 6: Model Selection UI ✅ COMPLETED
+- [x] Add checkboxes for selecting specific models to sync
+- [x] "Select All" / "Deselect All" functionality
+- [x] Builder.io-style model table with Name, Unique Identifier, Type columns
+- [x] Professional UI matching Builder.io design standards
+- [x] Interactive model selection with visual feedback
+
+### Phase 7: Export & Migration Features ✅ COMPLETED
+- [x] JSON export functionality for selected models
+- [x] Target space selection for model migration
+- [x] Complete migration workflow with progress tracking
+- [x] Switched to Builder.io Admin SDK for reliable API calls
+- [x] Automatic duplicate detection and model updating
+- [x] Comprehensive debugging and error handling
+
 ## Current Backlog 📋
 
-### Phase 6: Model Selection UI
-- [ ] Add checkboxes for selecting specific models to sync
-- [ ] "Select All" / "Deselect All" functionality
-- [ ] Model preview with field information
-- [ ] Conflict resolution UI for existing models
-
-### Phase 7: Content Operations
+### Phase 8: Content Operations
 - [ ] Implement actual content purging functionality
-- [ ] Add content analysis and preview
+- [ ] Add content analysis and preview  
 - [ ] Bulk content operations
 - [ ] Content backup before purging
 
-### Phase 8: Enhanced User Experience
+### Phase 9: Enhanced User Experience
 - [ ] Confirmation dialogs for destructive operations
 - [ ] Undo functionality for recent operations
 - [ ] Operation history and logging
 - [ ] Export/import of sync configurations
 
-### Phase 9: Advanced Features
+### Phase 10: Advanced Features
 - [ ] Scheduled sync operations
 - [ ] Webhook integration for automated syncing
 - [ ] Sync templates and presets
 - [ ] Performance optimization for large datasets
 
-### Phase 10: Monitoring & Analytics
+### Phase 11: Monitoring & Analytics
 - [ ] Sync success/failure metrics
 - [ ] Performance monitoring
 - [ ] Usage analytics dashboard
@@ -111,10 +120,10 @@ interface Model {
 ```
 
 ### API Integration
-- **GraphQL Endpoint**: `https://builder.io/api/v2/admin`
-- **Authentication**: Bearer token with private API key
-- **Queries**: GetAllModels for fetching model data
-- **Mutations**: CreateModel for model synchronization
+- **Builder.io Admin SDK**: Official SDK via `@builder.io/admin-sdk`
+- **Authentication**: Private API key via `createAdminApiClient()`
+- **Queries**: `adminSDK.query({ models: { ... } })` for fetching model data
+- **Mutations**: `adminSDK.mutation({ addModel: [...] })` for model creation/updates
 
 ## Development Notes
 

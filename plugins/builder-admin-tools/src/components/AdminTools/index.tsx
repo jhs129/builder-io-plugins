@@ -791,7 +791,7 @@ const AdminToolsPlugin = () => {
           {/* Header */}
           <div className="admin-tools-header">
             <h1 className="admin-tools-title">Model Selection</h1>
-            <p className="admin-tools-subtitle">Choose which models to export from <strong>{spaces[selectedSpaceIndex].name}</strong></p>
+            <p className="admin-tools-subtitle">Choose which models to synchronize from <strong>{spaces[selectedSpaceIndex].name}</strong></p>
           </div>
           
           {/* Model Selection Card */}
@@ -1093,20 +1093,25 @@ const AdminToolsPlugin = () => {
                 <h2 className="admin-tools-section-title">Choose Feature</h2>
                 <FeatureSelector
                   selectedFeature={selectedFeature}
-                  onFeatureChange={setSelectedFeature}
+                  onFeatureChange={(feature) => {
+                    setSelectedFeature(feature);
+                    if (feature === 'modelSync' && selectedSpaceIndex >= 0) {
+                      loadModelsForSelection(spaces[selectedSpaceIndex]);
+                    }
+                  }}
                   isVisible={selectedSpaceIndex >= 0}
                 />
               </div>
             )}
 
             {/* Action Section */}
-            {selectedSpaceIndex >= 0 && selectedFeature && (
+            {selectedSpaceIndex >= 0 && selectedFeature && selectedFeature !== 'modelSync' && (
               <div className="admin-tools-border-top">
                 <div className="admin-tools-exec-header">
                   <div>
                     <h3 className="admin-tools-exec-title">Ready to Execute</h3>
                     <p className="admin-tools-exec-desc">
-                      Running <strong>{selectedFeature === 'modelSync' ? 'Model Export' : selectedFeature}</strong> on{' '}
+                      Running <strong>{selectedFeature === 'modelSync' ? 'Model Synchronization' : selectedFeature}</strong> on{' '}
                       <strong>{spaces[selectedSpaceIndex].name}</strong>
                     </p>
                   </div>
@@ -1122,7 +1127,7 @@ const AdminToolsPlugin = () => {
                       Loading...
                     </>
                   ) : (
-                    selectedFeature === 'modelSync' ? 'Select Models to Export' : 'Run Feature'
+                    selectedFeature === 'modelSync' ? 'Select Models to Synchronize' : 'Run Feature'
                   )}
                 </button>
               </div>
