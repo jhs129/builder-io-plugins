@@ -36,15 +36,24 @@ const AdminToolsPlugin = () => {
   const [debugInfo, setDebugInfo] = useState<any[]>([]);
   const [showDebug, setShowDebug] = useState(false);
 
-  const addDebugLog = (message: string, data?: any) => {
+  const addDebugLog = (message: string, data?: any, level: 'info' | 'warning' | 'error' = 'info') => {
+    // Only log warnings and errors to reduce noise
+    if (level === 'info') return;
+    
     const timestamp = new Date().toISOString();
     const logEntry = {
       timestamp,
       message,
-      data: data ? JSON.stringify(data, null, 2) : undefined
+      data: data ? JSON.stringify(data, null, 2) : undefined,
+      level
     };
     setDebugInfo(prev => [...prev, logEntry]);
-    console.log(`[AdminTools Debug] ${timestamp}: ${message}`, data);
+    
+    if (level === 'error') {
+      console.error(`[AdminTools] ${timestamp}: ${message}`, data);
+    } else if (level === 'warning') {
+      console.warn(`[AdminTools] ${timestamp}: ${message}`, data);
+    }
   };
 
   const clearDebugLog = () => {
@@ -296,12 +305,6 @@ const AdminToolsPlugin = () => {
       const targetSpace = spaces[selectedTargetSpaceIndex];
       const modelsToMigrate = availableModels.filter(model => selectedModels.has(model.id));
 
-      addDebugLog("Starting model migration", {
-        sourceSpace: sourceSpace.name,
-        targetSpace: targetSpace.name,
-        modelCount: modelsToMigrate.length,
-        models: modelsToMigrate.map(m => ({ id: m.id, name: m.name, kind: m.kind }))
-      });
 
       // Check if target models already exist
       setStatus("Checking existing models in target space...");
@@ -313,38 +316,37 @@ const AdminToolsPlugin = () => {
       let errorCount = 0;
 
       for (const model of modelsToMigrate) {
-        if (existingModelNames.has(model.name)) {
-          setStatus(`Skipping "${model.name}" - already exists in ${targetSpace.name}`);
-          skippedCount++;
-          continue;
-        }
-
+        const existsInTarget = existingModelNames.has(model.name);
+        
         try {
-          setStatus(`Migrating "${model.name}" to ${targetSpace.name}... (${migratedCount + skippedCount + 1}/${modelsToMigrate.length})`);
+          if (existsInTarget) {
+            setStatus(`Updating "${model.name}" in ${targetSpace.name}... (${migratedCount + skippedCount + 1}/${modelsToMigrate.length})`);
+            addDebugLog(`⚠️ Model "${model.name}" already exists - updating instead of creating`, undefined, 'warning');
+          } else {
+            setStatus(`Creating "${model.name}" in ${targetSpace.name}... (${migratedCount + skippedCount + 1}/${modelsToMigrate.length})`);
+          }
           
           await createModelInSpace(model, targetSpace.privateKey);
           migratedCount++;
-          
-          addDebugLog(`Successfully migrated model: ${model.name}`, { model });
         } catch (error) {
-          console.error(`Error migrating model ${model.name}:`, error);
-          addDebugLog(`Failed to migrate model: ${model.name}`, { 
+          console.error(`Error ${existsInTarget ? 'updating' : 'creating'} model ${model.name}:`, error);
+          addDebugLog(`❌ Failed to ${existsInTarget ? 'update' : 'create'} model: ${model.name}`, { 
             error: error instanceof Error ? error.message : String(error),
             model 
-          });
+          }, 'error');
           errorCount++;
         }
       }
 
       // Final status
-      if (errorCount === 0 && skippedCount === 0) {
-        setStatus(`✅ Successfully migrated ${migratedCount} models to ${targetSpace.name}`);
+      if (errorCount === 0) {
+        setStatus(`✅ Successfully processed ${migratedCount} models to ${targetSpace.name}`);
       } else {
-        setStatus(`⚠️ Migration completed: ${migratedCount} migrated, ${skippedCount} skipped, ${errorCount} errors`);
+        setStatus(`⚠️ Migration completed: ${migratedCount} processed, ${errorCount} errors`);
       }
     } catch (error) {
       console.error("Error during migration:", error);
-      addDebugLog("Migration failed", { error: error instanceof Error ? error.message : String(error) });
+      addDebugLog("❌ Migration failed", { error: error instanceof Error ? error.message : String(error) }, 'error');
       setStatus(`Error during migration: ${error instanceof Error ? error.message : String(error)}`);
     } finally {
       setRunning(false);
@@ -428,15 +430,8 @@ const AdminToolsPlugin = () => {
   };
 
   const getAvailableModels = async (privateApiKey: string): Promise<Model[]> => {
-    addDebugLog("Starting getAvailableModels with Admin SDK", { 
-      privateApiKey: privateApiKey.substring(0, 10) + "...", 
-      fullLength: privateApiKey.length 
-    });
-
     try {
       const adminSDK = createAdminApiClient(privateApiKey);
-      
-      addDebugLog("Created Admin SDK client", { clientCreated: true });
 
       const response = await adminSDK.query({
         models: {
@@ -449,8 +444,6 @@ const AdminToolsPlugin = () => {
         }
       });
 
-      addDebugLog("Admin SDK response", response);
-
       const models = (response.data?.models || []).map((model: any) => ({
         id: model.id || "",
         name: model.name || "",
@@ -459,29 +452,19 @@ const AdminToolsPlugin = () => {
         helperText: model.helperText || "",
         everything: model.everything || {}
       }));
-
-      addDebugLog("Models processed successfully", { count: models.length, models });
       
       return models;
     } catch (error) {
-      addDebugLog("Exception in getAvailableModels", { 
-        error: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined
-      });
+      addDebugLog("❌ Failed to fetch models from space", { 
+        error: error instanceof Error ? error.message : String(error)
+      }, 'error');
       throw error;
     }
   };
 
   const createModelInSpace = async (model: Model, targetApiKey: string): Promise<void> => {
-    addDebugLog("Starting model creation with Admin SDK", { 
-      modelName: model.name, 
-      targetApiKey: targetApiKey.substring(0, 10) + "..." 
-    });
-
     try {
       const adminSDK = createAdminApiClient(targetApiKey);
-      
-      addDebugLog("Created Admin SDK client for target space", { clientCreated: true });
 
       // First check if model already exists
       const existingModelsResponse = await adminSDK.query({
@@ -494,10 +477,8 @@ const AdminToolsPlugin = () => {
       const existingModel = existingModelsResponse.data?.models?.find((m: any) => m.name === model.name);
       
       if (existingModel) {
-        addDebugLog("Model already exists, updating instead", { existingModel });
-        
         // Update existing model
-        const updateResult = await adminSDK.mutation({
+        await adminSDK.mutation({
           updateModel: [
             {
               body: {
@@ -512,19 +493,11 @@ const AdminToolsPlugin = () => {
             { id: true, name: true }
           ]
         });
-
-        addDebugLog("Model updated successfully", updateResult);
         return;
       }
 
       // Create new model using Admin SDK
-      addDebugLog("Creating new model", { 
-        name: model.name,
-        kind: model.kind,
-        fieldsCount: model.fields?.length || 0
-      });
-
-      const createResult = await adminSDK.mutation({
+      await adminSDK.mutation({
         addModel: [
           {
             body: {
@@ -537,13 +510,11 @@ const AdminToolsPlugin = () => {
         ]
       });
 
-      addDebugLog("Model created successfully with Admin SDK", createResult);
-
     } catch (error) {
-      addDebugLog("Exception in createModelInSpace", { 
+      addDebugLog("❌ Exception in createModelInSpace", { 
         error: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined
-      });
+        modelName: model.name
+      }, 'error');
       throw error;
     }
   };
@@ -752,7 +723,7 @@ const AdminToolsPlugin = () => {
                         <div style={{ 
                           fontSize: '13px', 
                           fontWeight: 500, 
-                          color: '#111827',
+                          color: log.level === 'error' ? '#dc2626' : log.level === 'warning' ? '#d97706' : '#111827',
                           marginBottom: '4px' 
                         }}>
                           {log.message}
@@ -1034,7 +1005,7 @@ const AdminToolsPlugin = () => {
                         <div style={{ 
                           fontSize: '13px', 
                           fontWeight: 500, 
-                          color: '#111827',
+                          color: log.level === 'error' ? '#dc2626' : log.level === 'warning' ? '#d97706' : '#111827',
                           marginBottom: '4px' 
                         }}>
                           {log.message}

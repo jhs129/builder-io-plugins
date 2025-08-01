@@ -56,25 +56,32 @@ A Builder.io plugin for managing spaces and content with powerful admin features
 
 ## Current Backlog 📋
 
-### Phase 8: Content Operations
+### Phase 8: Model Update Support
+- [ ] Add support for updating existing models instead of just creating new ones
+- [ ] Implement model existence check by name before sync operation
+- [ ] Use updateModel mutation when model already exists in target space
+- [ ] Add UI indicator to show which models will be created vs updated
+- [ ] Handle field additions, removals, and modifications during model updates
+
+### Phase 9: Content Operations
 - [ ] Implement actual content purging functionality
 - [ ] Add content analysis and preview  
 - [ ] Bulk content operations
 - [ ] Content backup before purging
 
-### Phase 9: Enhanced User Experience
+### Phase 10: Enhanced User Experience
 - [ ] Confirmation dialogs for destructive operations
 - [ ] Undo functionality for recent operations
 - [ ] Operation history and logging
 - [ ] Export/import of sync configurations
 
-### Phase 10: Advanced Features
+### Phase 11: Advanced Features
 - [ ] Scheduled sync operations
 - [ ] Webhook integration for automated syncing
 - [ ] Sync templates and presets
 - [ ] Performance optimization for large datasets
 
-### Phase 11: Monitoring & Analytics
+### Phase 12: Monitoring & Analytics
 - [ ] Sync success/failure metrics
 - [ ] Performance monitoring
 - [ ] Usage analytics dashboard

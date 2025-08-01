@@ -1,4 +1,5 @@
 import React from "react";
+import { CustomSelect } from "./CustomSelect";
 
 interface Space {
   name: string;
@@ -17,20 +18,22 @@ export const SpaceSelector: React.FC<SpaceSelectorProps> = ({
   selectedSpaceIndex,
   onSpaceChange,
 }) => {
+  const options = [
+    { value: -1, label: "Select a space..." },
+    ...spaces.map((space, index) => ({
+      value: index,
+      label: space.name,
+    })),
+  ];
+
   return (
     <div>
-      <select
+      <CustomSelect
+        options={options}
         value={selectedSpaceIndex}
-        onChange={(e) => onSpaceChange(parseInt(e.target.value))}
-        className="admin-tools-select"
-      >
-        <option value={-1}>Select a space...</option>
-        {spaces.map((space, index) => (
-          <option key={index} value={index}>
-            {space.name}
-          </option>
-        ))}
-      </select>
+        onChange={onSpaceChange}
+        placeholder="Select a space..."
+      />
     </div>
   );
 };
