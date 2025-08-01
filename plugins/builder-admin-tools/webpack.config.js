@@ -10,7 +10,6 @@ module.exports = {
     "@builder.io/react": "@builder.io/react",
     "@builder.io/app-context": "@builder.io/app-context",
     "@emotion/core": "@emotion/core",
-    "@orlandohealth/build-kit": "@orlandohealth/build-kit",
     react: "react",
     "react-dom": "react-dom",
   },
@@ -21,12 +20,6 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".jsx", ".tsx", ".ts", ".css"],
-    alias: {
-      "@orlandohealth/build-kit": path.resolve(
-        __dirname,
-        "../../packages/build-kit"
-      ),
-    },
   },
   module: {
     rules: [
