@@ -205,16 +205,15 @@
 }
 
 .admin-tools-button {
-  width: 100%;
   background-color: #3b82f6;
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 8px 16px;
   border-radius: 0.5rem;
   font-weight: 500;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
@@ -231,19 +230,19 @@
 .admin-tools-button-secondary {
   background-color: white;
   color: #374151;
-  padding: 0.75rem 1.5rem;
+  padding: 8px 16px;
   border-radius: 0.5rem;
   font-weight: 500;
   border: 1px solid #d1d5db;
   cursor: pointer;
   transition: all 0.2s;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
 .admin-tools-button-secondary:hover:not(:disabled) {
-  background-color: #f9fafb;
+  background-color: #f3f4f6;
   border-color: #9ca3af;
 }
 
@@ -274,7 +273,7 @@
   padding: 1rem;
   border-radius: 0.5rem;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .admin-tools-status-error {

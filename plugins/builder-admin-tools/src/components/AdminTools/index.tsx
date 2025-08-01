@@ -35,6 +35,7 @@ const AdminToolsPlugin = () => {
   const [selectedTargetSpaceIndex, setSelectedTargetSpaceIndex] = useState<number>(-1);
   const [debugInfo, setDebugInfo] = useState<any[]>([]);
   const [showDebug, setShowDebug] = useState(false);
+  const [migrationCompleted, setMigrationCompleted] = useState(false);
 
   const addDebugLog = (message: string, data?: any, level: 'info' | 'warning' | 'error' = 'info') => {
     // Only log warnings and errors to reduce noise
@@ -275,12 +276,14 @@ const AdminToolsPlugin = () => {
     setAvailableModels([]);
     setSelectedModels(new Set());
     setSelectedTargetSpaceIndex(-1);
+    setMigrationCompleted(false);
     setStatus("");
   };
 
   const backToModelSelection = () => {
     setShowMigrationTarget(false);
     setSelectedTargetSpaceIndex(-1);
+    setMigrationCompleted(false);
     setStatus("");
   };
 
@@ -291,6 +294,7 @@ const AdminToolsPlugin = () => {
     }
 
     setShowMigrationTarget(true);
+    setMigrationCompleted(false);
     setStatus(`Select target space for migrating ${selectedModels.size} model${selectedModels.size !== 1 ? 's' : ''}`);
   };
 
@@ -301,7 +305,6 @@ const AdminToolsPlugin = () => {
     setStatus("Starting migration...");
 
     try {
-      const sourceSpace = spaces[selectedSpaceIndex];
       const targetSpace = spaces[selectedTargetSpaceIndex];
       const modelsToMigrate = availableModels.filter(model => selectedModels.has(model.id));
 
@@ -340,9 +343,11 @@ const AdminToolsPlugin = () => {
 
       // Final status
       if (errorCount === 0) {
-        setStatus(`✅ Successfully processed ${migratedCount} models to ${targetSpace.name}`);
+        setStatus(`Successfully processed ${migratedCount} models to ${targetSpace.name}`);
+        setMigrationCompleted(true);
       } else {
         setStatus(`⚠️ Migration completed: ${migratedCount} processed, ${errorCount} errors`);
+        setMigrationCompleted(true);
       }
     } catch (error) {
       console.error("Error during migration:", error);
@@ -353,65 +358,8 @@ const AdminToolsPlugin = () => {
     }
   };
 
-  const runModelSync = async (sourceSpace: Space) => {
-    setStatus("Fetching models from source space...");
-    
-    // Get available target spaces (all spaces except the source)
-    const targetSpaces = spaces.filter(space => space.privateKey !== sourceSpace.privateKey);
-    
-    if (targetSpaces.length === 0) {
-      throw new Error("Model sync requires at least one other space to be configured as a target");
-    }
-    
-    // Get models from source space
-    const sourceModels = await getAvailableModels(sourceSpace.privateKey);
-    
-    if (sourceModels.length === 0) {
-      throw new Error("No models found in source space");
-    }
-
-    setStatus(`Found ${sourceModels.length} models. Starting synchronization...`);
-    
-    let syncedCount = 0;
-    let errorCount = 0;
-    
-    // Sync models to each target space
-    for (const targetSpace of targetSpaces) {
-      setStatus(`Syncing to ${targetSpace.name}... (${syncedCount}/${sourceModels.length * targetSpaces.length})`);
-      
-      try {
-        // Get existing models in target space to avoid duplicates
-        const targetModels = await getAvailableModels(targetSpace.privateKey);
-        const targetModelNames = new Set(targetModels.map(m => m.name));
-        
-        // Sync each model
-        for (const model of sourceModels) {
-          if (targetModelNames.has(model.name)) {
-            setStatus(`Skipping ${model.name} - already exists in ${targetSpace.name}`);
-            continue;
-          }
-          
-          setStatus(`Creating model "${model.name}" in ${targetSpace.name}...`);
-          
-          await createModelInSpace(model, targetSpace.privateKey);
-          syncedCount++;
-          
-          setStatus(`Created ${model.name} in ${targetSpace.name} (${syncedCount}/${sourceModels.length * targetSpaces.length})`);
-        }
-      } catch (error) {
-        console.error(`Error syncing to ${targetSpace.name}:`, error);
-        errorCount++;
-        setStatus(`Error syncing to ${targetSpace.name}: ${error instanceof Error ? error.message : String(error)}`);
-        // Continue with other spaces
-      }
-    }
-    
-    if (errorCount === 0) {
-      setStatus(`✅ Successfully synced ${syncedCount} models to ${targetSpaces.length} target space(s)`);
-    } else {
-      setStatus(`⚠️ Sync completed with errors: ${syncedCount} models synced, ${errorCount} errors occurred`);
-    }
-  };
+  // Legacy function - replaced by model migration workflow
+  // const runModelSync = async (sourceSpace: Space) => { ... }
 
   const runContentPurger = async (space: Space) => {
     setStatus("Analyzing content in space...");
@@ -571,7 +519,7 @@ const AdminToolsPlugin = () => {
                   className="admin-tools-select"
                 >
                   <option value={-1}>Select target space...</option>
-                  {availableTargetSpaces.map((space, index) => {
+                  {availableTargetSpaces.map((space) => {
                     const originalIndex = spaces.findIndex(s => s.privateKey === space.privateKey);
                     return (
                       <option key={originalIndex} value={originalIndex}>
@@ -635,20 +583,22 @@ const AdminToolsPlugin = () => {
                   >
                     ← Back to Model Selection
                   </button>
-                  <button
-                    onClick={migrateSelectedModels}
-                    disabled={running || selectedTargetSpaceIndex < 0}
-                    className="admin-tools-button"
-                  >
-                    {running ? (
-                      <>
-                        <div className="admin-tools-spinner"></div>
-                        Migrating...
-                      </>
-                    ) : (
-                      `Migrate ${selectedModels.size} Model${selectedModels.size !== 1 ? 's' : ''}`
-                    )}
-                  </button>
+                  {!migrationCompleted && (
+                    <button
+                      onClick={migrateSelectedModels}
+                      disabled={running || selectedTargetSpaceIndex < 0}
+                      className="admin-tools-button"
+                    >
+                      {running ? (
+                        <>
+                          <div className="admin-tools-spinner"></div>
+                          Migrating...
+                        </>
+                      ) : (
+                        `Migrate ${selectedModels.size} Model${selectedModels.size !== 1 ? 's' : ''}`
+                      )}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

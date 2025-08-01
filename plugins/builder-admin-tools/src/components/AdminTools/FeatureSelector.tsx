@@ -8,21 +8,21 @@ const styles = `
   }
   
   .feature-selector-button {
-    padding: 0.75rem 1.5rem;
+    padding: 8px 16px;
     border-radius: 0.75rem;
     font-weight: 500;
     transition: all 0.2s ease;
     cursor: pointer;
     font-size: 14px;
-    background-color: #2563eb;
+    background-color: #3b82f6;
     color: white;
-    border: 2px solid #2563eb;
+    border: 2px solid #3b82f6;
   }
   
   .feature-selector-button:hover {
-    background-color: white;
-    color: #2563eb;
-    border: 2px solid #2563eb;
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 2px solid #d1d5db;
   }
   
   .feature-selector-button-selected {
