@@ -140,57 +140,111 @@ const AdminToolsPlugin = () => {
 
   if (loading) {
     return (
-      <div className="p-6">
-        <h2 className="text-xl font-bold mb-4">Builder.io Admin Tools</h2>
-        <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded">
-          <p>Loading configuration...</p>
+      <div className="admin-tools-container">
+        <div className="admin-tools-max-width">
+          <div className="admin-tools-card">
+            <div className="admin-tools-section">
+              <div className="admin-tools-loading-container">
+                <div className="admin-tools-loading-spinner"></div>
+                <span style={{ color: '#6b7280' }}>Loading configuration...</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
   
   if (spaces.length === 0) {
-    return <ConfigurationStatus status={status} />;
+    return (
+      <div className="admin-tools-container">
+        <div className="admin-tools-max-width">
+          <ConfigurationStatus status={status} />
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Builder.io Admin Tools</h1>
-      
-      <div className="space-y-6">
-        <SpaceSelector
-          spaces={spaces}
-          selectedSpaceIndex={selectedSpaceIndex}
-          onSpaceChange={setSelectedSpaceIndex}
-        />
+    <div className="admin-tools-container">
+      <div className="admin-tools-max-width">
+        {/* Header */}
+        <div className="admin-tools-header">
+          <h1 className="admin-tools-title">Builder.io Admin Tools</h1>
+          <p className="admin-tools-subtitle">Manage your Builder.io spaces and content with powerful admin features.</p>
+        </div>
+        
+        {/* Main Card */}
+        <div className="admin-tools-card">
+          <div className="admin-tools-section">
+            {/* Space Selection Section */}
+            <div className="admin-tools-section-spacing">
+              <h2 className="admin-tools-section-title">Select Space</h2>
+              <SpaceSelector
+                spaces={spaces}
+                selectedSpaceIndex={selectedSpaceIndex}
+                onSpaceChange={setSelectedSpaceIndex}
+              />
+            </div>
 
-        <FeatureSelector
-          selectedFeature={selectedFeature}
-          onFeatureChange={setSelectedFeature}
-          isVisible={selectedSpaceIndex >= 0}
-        />
+            {/* Feature Selection Section */}
+            {selectedSpaceIndex >= 0 && (
+              <div className="admin-tools-section-spacing">
+                <h2 className="admin-tools-section-title">Choose Feature</h2>
+                <FeatureSelector
+                  selectedFeature={selectedFeature}
+                  onFeatureChange={setSelectedFeature}
+                  isVisible={selectedSpaceIndex >= 0}
+                />
+              </div>
+            )}
 
-        {selectedSpaceIndex >= 0 && selectedFeature && (
-          <div>
-            <button
-              onClick={handleRunFeature}
-              disabled={running}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              {running ? "Running..." : "Run Feature"}
-            </button>
+            {/* Action Section */}
+            {selectedSpaceIndex >= 0 && selectedFeature && (
+              <div className="admin-tools-border-top">
+                <div className="admin-tools-exec-header">
+                  <div>
+                    <h3 className="admin-tools-exec-title">Ready to Execute</h3>
+                    <p className="admin-tools-exec-desc">
+                      Running <strong>{selectedFeature}</strong> on{' '}
+                      <strong>{spaces[selectedSpaceIndex].name}</strong>
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleRunFeature}
+                  disabled={running}
+                  className="admin-tools-button"
+                >
+                  {running ? (
+                    <>
+                      <div className="admin-tools-spinner"></div>
+                      Running...
+                    </>
+                  ) : (
+                    "Run Feature"
+                  )}
+                </button>
+              </div>
+            )}
           </div>
-        )}
+        </div>
 
+        {/* Status Section */}
         {status && (
-          <div className={`p-4 rounded-md ${
+          <div className={`admin-tools-status ${
             status.startsWith("Error") 
-              ? "bg-red-100 border border-red-400 text-red-700"
+              ? "admin-tools-status-error"
               : status.includes("completed")
-              ? "bg-green-100 border border-green-400 text-green-700"
-              : "bg-blue-100 border border-blue-400 text-blue-700"
+              ? "admin-tools-status-success"
+              : "admin-tools-status-info"
           }`}>
-            <p>{status}</p>
+            <div className="admin-tools-status-icon">
+              {status.startsWith("Error") ? "⚠️" : status.includes("completed") ? "✅" : "ℹ️"}
+            </div>
+            <div>
+              <p style={{ fontWeight: 500 }}>{status}</p>
+            </div>
           </div>
         )}
       </div>

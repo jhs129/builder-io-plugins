@@ -1,6 +1,7 @@
 import { Builder } from "@builder.io/react";
 import { pluginId } from "./utils";
 import AdminToolsPlugin from "./components/AdminTools";
+import "./index.css";
 
 Builder.register("appTab", {
   name: "Admin Tools",

@@ -35,17 +35,7 @@ module.exports = {
         use: [
           "style-loader",
           "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                plugins: [
-                  require("@tailwindcss/postcss7-compat"),
-                  require("autoprefixer"),
-                ],
-              },
-            },
-          },
+          "postcss-loader",
         ],
       },
     ],
