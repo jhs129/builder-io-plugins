@@ -1,3 +1,405 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Custom CSS for Admin Tools Plugin */
+.admin-tools-container {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.admin-tools-max-width {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.admin-tools-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.admin-tools-header {
+  margin-bottom: 2rem;
+}
+
+.admin-tools-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.admin-tools-subtitle {
+  color: #6b7280;
+}
+
+.admin-tools-section {
+  padding: 2rem;
+}
+
+.admin-tools-section-spacing {
+  margin-bottom: 2rem;
+}
+
+.admin-tools-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.admin-tools-select {
+  width: 200px;
+  padding: 8px 12px;
+  border: 1px solid #e1e5e9;
+  border-radius: 6px;
+  background-color: #fafbfc;
+  color: #333;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23666' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+  padding-right: 32px;
+}
+
+.admin-tools-select:focus {
+  border-color: #4285f4;
+  background-color: white;
+  box-shadow: 0 0 0 1px #4285f4;
+}
+
+.admin-tools-select:hover {
+  border-color: #c1c7cd;
+  background-color: white;
+}
+
+.admin-tools-select option {
+  padding: 8px 12px;
+  background-color: white;
+  color: #333;
+  border: none;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.admin-tools-select option:hover {
+  background-color: #f5f7fa;
+}
+
+.admin-tools-select option:checked {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+/* Custom Select Component */
+.custom-select {
+  position: relative;
+  width: 200px;
+  outline: none;
+}
+
+.custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border: 1px solid #e1e5e9;
+  border-radius: 6px;
+  background-color: #fafbfc;
+  color: #333;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-select-trigger:hover {
+  border-color: #c1c7cd;
+  background-color: white;
+}
+
+.custom-select-trigger-open {
+  border-color: #4285f4;
+  background-color: white;
+  box-shadow: 0 0 0 1px #4285f4;
+}
+
+.custom-select-value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.custom-select-arrow {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  transition: transform 0.2s ease;
+}
+
+.custom-select-arrow-up {
+  transform: rotate(180deg);
+}
+
+.custom-select-dropdown {
+  position: fixed;
+  z-index: 9999;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  animation: dropdown-fade-in 0.15s ease-out;
+  min-width: 200px;
+}
+
+@keyframes dropdown-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-select-option {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  min-height: 36px;
+}
+
+.custom-select-option:hover,
+.custom-select-option-highlighted {
+  background-color: #f5f7fa;
+}
+
+.custom-select-option-selected {
+  color: #4285f4;
+  font-weight: 500;
+}
+
+.custom-select-checkmark {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+.admin-tools-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-tools-button:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.admin-tools-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.admin-tools-button-secondary {
+  background-color: white;
+  color: #374151;
+  padding: 8px 16px;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-tools-button-secondary:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.admin-tools-button-secondary:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.admin-tools-spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.admin-tools-status {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.admin-tools-status-error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.admin-tools-status-success {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.admin-tools-status-info {
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+}
+
+.admin-tools-status-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.admin-tools-border-top {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 2rem;
+}
+
+.admin-tools-exec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.admin-tools-exec-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.admin-tools-exec-desc {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.admin-tools-loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-tools-loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid transparent;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 0.75rem;
+}
+
+.admin-tools-config-container {
+  text-align: center;
+}
+
+.admin-tools-config-icon {
+  width: 4rem;
+  height: 4rem;
+  background-color: #fef3c7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 2rem;
+}
+
+.admin-tools-config-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.admin-tools-config-content {
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.admin-tools-config-text {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.admin-tools-config-steps {
+  background-color: #fefce8;
+  border: 1px solid #fde68a;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.admin-tools-config-steps-title {
+  font-weight: 600;
+  color: #92400e;
+  margin-bottom: 0.5rem;
+}
+
+.admin-tools-config-steps-list {
+  font-size: 0.875rem;
+  color: #a16207;
+  text-align: left;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-tools-config-steps-item {
+  margin-bottom: 0.25rem;
+}
+
+.admin-tools-config-steps-item.indent {
+  margin-left: 1rem;
+}
