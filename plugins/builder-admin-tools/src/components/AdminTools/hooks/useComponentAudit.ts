@@ -8,6 +8,7 @@ export interface ComponentUsageReport {
     id: string;
     name: string;
     editUrl: string;
+    lastPreviewUrl?: string;
   }>;
 }
 
@@ -54,7 +55,7 @@ export const useComponentAudit = () => {
       const auditReport = analyzeComponentUsage(allPages);
 
       setReport(auditReport);
-      setStatus(`✅ Component audit completed. Found ${auditReport.length} unique components across ${allPages.length} pages.`);
+      setStatus(`Component audit completed. Found ${auditReport.length} unique components across ${allPages.length} pages.`);
       
       return auditReport;
     } catch (error) {
@@ -99,7 +100,7 @@ export const useComponentAudit = () => {
       const auditReport = analyzeComponentUsage(allPages);
 
       setReport(auditReport);
-      setStatus(`✅ Component audit completed. Found ${auditReport.length} unique components across ${allPages.length} pages.`);
+      setStatus(`Component audit completed. Found ${auditReport.length} unique components across ${allPages.length} pages.`);
       
       return auditReport;
     } catch (error) {
@@ -131,7 +132,8 @@ export const useComponentAudit = () => {
         reportItem.pages.push({
           id: page.id,
           name: page.name || 'Untitled',
-          editUrl: `https://builder.io/content/${page.id}`
+          editUrl: `https://builder.io/content/${page.id}`,
+          lastPreviewUrl: page.lastPreviewUrl
         });
       });
     });

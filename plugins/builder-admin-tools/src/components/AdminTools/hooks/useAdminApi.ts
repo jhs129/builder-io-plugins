@@ -15,6 +15,7 @@ export interface PageContent {
   name?: string;
   published?: string;
   componentsUsed?: string[];
+  lastPreviewUrl?: string;
 }
 
 export const useAdminApi = () => {
@@ -155,7 +156,8 @@ export const useAdminApi = () => {
         id: item.id,
         name: item.name || 'Untitled',
         published: item.published,
-        componentsUsed: extractComponentsUsed(item.everything)
+        componentsUsed: extractComponentsUsed(item.everything),
+        lastPreviewUrl: item.everything?.meta?.lastPreviewUrl
       }));
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : String(err);

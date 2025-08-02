@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ComponentUsageReport } from './hooks/useComponentAudit';
-import { ExpandableSection } from './ExpandableSection';
 
 interface Space {
   name: string;
@@ -13,21 +12,17 @@ interface ComponentAuditViewProps {
   report: ComponentUsageReport[];
   status: string;
   onBack: () => void;
+  onViewComponent: (componentName: string) => void;
 }
 
 export const ComponentAuditView: React.FC<ComponentAuditViewProps> = ({
   space,
   report,
   status,
-  onBack
+  onBack,
+  onViewComponent
 }) => {
   const [showBuilderComponents, setShowBuilderComponents] = useState(false);
-  const [expandedComponents, setExpandedComponents] = useState<Set<string>>(new Set());
-
-  // Debug logging
-  React.useEffect(() => {
-    console.log('ComponentAuditView: expandedComponents changed:', Array.from(expandedComponents));
-  }, [expandedComponents]);
 
   const filteredComponents = report.filter(component => 
     showBuilderComponents || !component.componentName.startsWith('@builder.io')
@@ -135,131 +130,54 @@ export const ComponentAuditView: React.FC<ComponentAuditViewProps> = ({
                 }}>
                   <div>Component Name</div>
                   <div>Usage Count</div>
-                  <div>Actions</div>
+                  <div>View Details</div>
                 </div>
 
                 {/* Table Body */}
                 <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
-                  {filteredComponents.map((component, index) => (
-                    <div key={component.componentName}>
-                      {/* Component Row */}
-                      <div
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: '1fr 100px 120px',
-                          padding: '12px 16px',
-                          borderBottom: '1px solid #f3f4f6',
-                          backgroundColor: 'white'
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <span style={{ 
-                            fontWeight: 500, 
-                            color: '#111827',
-                            fontSize: '14px'
-                          }}>
-                            {component.componentName}
-                          </span>
-                        </div>
-                        
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <span style={{
-                            fontSize: '14px',
-                            color: '#374151',
-                            fontWeight: 500
-                          }}>
-                            {component.usageCount}
-                          </span>
-                        </div>
-                        
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              console.log('Button clicked for:', component.componentName);
-                              console.log('Current expandedComponents:', Array.from(expandedComponents));
-                              
-                              const newExpanded = new Set(expandedComponents);
-                              const wasExpanded = newExpanded.has(component.componentName);
-                              
-                              if (wasExpanded) {
-                                newExpanded.delete(component.componentName);
-                                console.log('Collapsing component:', component.componentName);
-                              } else {
-                                newExpanded.add(component.componentName);
-                                console.log('Expanding component:', component.componentName);
-                              }
-                              
-                              console.log('New expandedComponents:', Array.from(newExpanded));
-                              setExpandedComponents(newExpanded);
-                            }}
-                            className="admin-tools-button-secondary"
-                            style={{ 
-                              fontSize: '12px', 
-                              padding: '4px 8px',
-                              cursor: 'pointer',
-                              userSelect: 'none'
-                            }}
-                          >
-                            {expandedComponents.has(component.componentName) ? '−' : '+'}
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Component Details */}
-                      <ExpandableSection
-                        isExpanded={expandedComponents.has(component.componentName)}
-                      >
-                        <div style={{ 
-                          borderBottom: index < filteredComponents.length - 1 ? '1px solid #e5e7eb' : 'none'
+                  {filteredComponents.map((component) => (
+                    <div
+                      key={component.componentName}
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 100px 120px',
+                        padding: '12px 16px',
+                        borderBottom: '1px solid #f3f4f6',
+                        backgroundColor: 'white'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <span style={{ 
+                          fontWeight: 500, 
+                          color: '#111827',
+                          fontSize: '14px'
                         }}>
-                          <div style={{ padding: '16px', paddingLeft: '32px' }}>
-                            <h4 style={{ 
-                              margin: '0 0 12px 0', 
-                              fontSize: '13px', 
-                              fontWeight: 600, 
-                              color: '#374151' 
-                            }}>
-                              Usage of {component.componentName}:
-                            </h4>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                              {component.pages.map((page) => (
-                                <div key={page.id} style={{ 
-                                  display: 'flex', 
-                                  justifyContent: 'space-between', 
-                                  alignItems: 'center',
-                                  padding: '8px 12px',
-                                  backgroundColor: 'white',
-                                  borderRadius: '4px',
-                                  border: '1px solid #e5e7eb'
-                                }}>
-                                  <span style={{ 
-                                    fontSize: '13px', 
-                                    color: '#111827',
-                                    fontWeight: 500
-                                  }}>
-                                    {page.name}
-                                  </span>
-                                  <a
-                                    href={page.editUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="admin-tools-button-secondary"
-                                    style={{ 
-                                      fontSize: '11px', 
-                                      padding: '4px 8px',
-                                      textDecoration: 'none'
-                                    }}
-                                  >
-                                    Edit
-                                  </a>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </ExpandableSection>
+                          {component.componentName}
+                        </span>
+                      </div>
+                      
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <span style={{
+                          fontSize: '14px',
+                          color: '#374151',
+                          fontWeight: 500
+                        }}>
+                          {component.usageCount}
+                        </span>
+                      </div>
+                      
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <button
+                          onClick={() => onViewComponent(component.componentName)}
+                          className="admin-tools-button-secondary"
+                          style={{ 
+                            fontSize: '12px', 
+                            padding: '6px 12px'
+                          }}
+                        >
+                          View
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>

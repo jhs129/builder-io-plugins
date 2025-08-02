@@ -7,7 +7,7 @@ export interface Space {
 }
 
 export type FeatureType = 'modelSync' | 'componentAudit' | 'contentPurger' | '';
-export type ViewType = 'main' | 'modelSelection' | 'componentAudit' | 'migration';
+export type ViewType = 'main' | 'modelSelection' | 'componentAudit' | 'componentDetail' | 'migration';
 
 interface AdminToolsState {
   // Configuration
@@ -19,6 +19,7 @@ interface AdminToolsState {
   currentView: ViewType;
   selectedFeature: FeatureType;
   selectedSpaceIndex: number;
+  selectedComponentName: string;
   
   // Model Migration State
   selectedTargetSpaceIndex: number;
@@ -40,6 +41,7 @@ type AdminToolsAction =
   | { type: 'SET_CURRENT_VIEW'; payload: ViewType }
   | { type: 'SET_SELECTED_FEATURE'; payload: FeatureType }
   | { type: 'SET_SELECTED_SPACE_INDEX'; payload: number }
+  | { type: 'SET_SELECTED_COMPONENT_NAME'; payload: string }
   | { type: 'SET_SELECTED_TARGET_SPACE_INDEX'; payload: number }
   | { type: 'SET_MIGRATION_COMPLETED'; payload: boolean }
   | { type: 'SET_STATUS'; payload: string }
@@ -57,6 +59,7 @@ const initialState: AdminToolsState = {
   currentView: 'main',
   selectedFeature: '',
   selectedSpaceIndex: -1,
+  selectedComponentName: '',
   selectedTargetSpaceIndex: -1,
   migrationCompleted: false,
   status: '',
@@ -79,6 +82,8 @@ function adminToolsReducer(state: AdminToolsState, action: AdminToolsAction): Ad
       return { ...state, selectedFeature: action.payload };
     case 'SET_SELECTED_SPACE_INDEX':
       return { ...state, selectedSpaceIndex: action.payload };
+    case 'SET_SELECTED_COMPONENT_NAME':
+      return { ...state, selectedComponentName: action.payload };
     case 'SET_SELECTED_TARGET_SPACE_INDEX':
       return { ...state, selectedTargetSpaceIndex: action.payload };
     case 'SET_MIGRATION_COMPLETED':
@@ -124,6 +129,7 @@ interface AdminToolsContextType {
   setCurrentView: (view: ViewType) => void;
   setSelectedFeature: (feature: FeatureType) => void;
   setSelectedSpaceIndex: (index: number) => void;
+  setSelectedComponentName: (componentName: string) => void;
   setSelectedTargetSpaceIndex: (index: number) => void;
   setMigrationCompleted: (completed: boolean) => void;
   setStatus: (status: string) => void;
@@ -158,6 +164,7 @@ export const AdminToolsProvider: React.FC<AdminToolsProviderProps> = ({ children
   const setCurrentView = (view: ViewType) => dispatch({ type: 'SET_CURRENT_VIEW', payload: view });
   const setSelectedFeature = (feature: FeatureType) => dispatch({ type: 'SET_SELECTED_FEATURE', payload: feature });
   const setSelectedSpaceIndex = (index: number) => dispatch({ type: 'SET_SELECTED_SPACE_INDEX', payload: index });
+  const setSelectedComponentName = (componentName: string) => dispatch({ type: 'SET_SELECTED_COMPONENT_NAME', payload: componentName });
   const setSelectedTargetSpaceIndex = (index: number) => dispatch({ type: 'SET_SELECTED_TARGET_SPACE_INDEX', payload: index });
   const setMigrationCompleted = (completed: boolean) => dispatch({ type: 'SET_MIGRATION_COMPLETED', payload: completed });
   const setStatus = (status: string) => dispatch({ type: 'SET_STATUS', payload: status });
@@ -197,6 +204,7 @@ export const AdminToolsProvider: React.FC<AdminToolsProviderProps> = ({ children
     setCurrentView,
     setSelectedFeature,
     setSelectedSpaceIndex,
+    setSelectedComponentName,
     setSelectedTargetSpaceIndex,
     setMigrationCompleted,
     setStatus,

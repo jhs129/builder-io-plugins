@@ -6,6 +6,7 @@ import { SpaceSelector } from "./SpaceSelector";
 import { FeatureSelector } from "./FeatureSelector";
 import { ModelSelection } from "./ModelSelection";
 import { ComponentAuditView } from "./ComponentAuditView";
+import { ComponentDetailView } from "./ComponentDetailView";
 import { AdminToolsProvider, useAdminToolsContext, Space } from "./AdminToolsContext";
 import { useModelSync } from "./hooks/useModelSync";
 import { useComponentAudit } from "./hooks/useComponentAudit";
@@ -19,6 +20,7 @@ const AdminToolsContent = () => {
     setCurrentView,
     setSelectedFeature,
     setSelectedSpaceIndex,
+    setSelectedComponentName,
     setStatus,
     setRunning,
     addDebugLog,
@@ -268,6 +270,35 @@ const AdminToolsContent = () => {
         report={componentAudit.report}
         status={componentAudit.status}
         onBack={() => setCurrentView('main')}
+        onViewComponent={(componentName) => {
+          setSelectedComponentName(componentName);
+          setCurrentView('componentDetail');
+        }}
+      />
+    );
+  }
+
+  if (state.currentView === 'componentDetail') {
+    const currentSpace = state.selectedSpaceIndex >= 0 ? 
+      state.spaces[state.selectedSpaceIndex] : 
+      { name: "Current Space", publicKey: appState.user.currentOrganization, privateKey: "" };
+    
+    const selectedComponent = componentAudit.report.find(
+      component => component.componentName === state.selectedComponentName
+    );
+    
+    if (!selectedComponent) {
+      // If component not found, go back to audit view
+      setCurrentView('componentAudit');
+      return null;
+    }
+      
+    return (
+      <ComponentDetailView
+        space={currentSpace}
+        component={selectedComponent}
+        onBack={() => setCurrentView('componentAudit')}
+        onBackToMain={() => setCurrentView('main')}
       />
     );
   }
