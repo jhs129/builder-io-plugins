@@ -137,33 +137,60 @@ const AdminToolsContent = () => {
     }
   };
 
-  const handleFeatureChange = (feature: string) => {
+  const runComponentAudit = async () => {
+    const publicKey = appState.user.mainSpaceApiKey;
+    
+    if (!publicKey) {
+      setStatus("No main space API key found. Please ensure you're in a Builder.io space.");
+      return;
+    }
+    
+    const mainSpace = {
+      name: "Current Space",
+      publicKey: publicKey,
+      privateKey: "" // Not needed for component audit
+    };
+    
+    setRunning(true);
+    try {
+      const report = await componentAudit.runComponentAuditForModels(mainSpace, ['page', 'article']);
+      if (report.length >= 0) {
+        setCurrentView('componentAudit');
+      }
+    } catch (error) {
+      console.error("Error running component audit:", error);
+      addDebugLog("❌ Component audit failed", { error: error instanceof Error ? error.message : String(error) }, 'error');
+    } finally {
+      setRunning(false);
+    }
+  };
+
+  const handleFeatureChange = async (feature: string) => {
     setSelectedFeature(feature as any);
     resetFeatureState();
     modelSync.resetState();
     componentAudit.clearReport();
+    
+    // Auto-execute Component Audit when selected
+    if (feature === 'componentAudit') {
+      await runComponentAudit();
+    }
   };
 
   const handleRunFeature = async () => {
-    if (!state.selectedFeature || state.selectedSpaceIndex < 0) return;
+    if (!state.selectedFeature) return;
     
+    // For Component Audit, use the dedicated function
+    if (state.selectedFeature === "componentAudit") {
+      await runComponentAudit();
+      return;
+    }
+    
+    // For other features, require space selection
+    if (state.selectedSpaceIndex < 0) return;
     const space = state.spaces[state.selectedSpaceIndex];
 
     switch (state.selectedFeature) {
-      case "componentAudit":
-        setRunning(true);
-        try {
-          const report = await componentAudit.runComponentAudit(space);
-          if (report.length > 0) {
-            setCurrentView('componentAudit');
-          }
-        } catch (error) {
-          console.error("Error running component audit:", error);
-          addDebugLog("❌ Component audit failed", { error: error instanceof Error ? error.message : String(error) }, 'error');
-        } finally {
-          setRunning(false);
-        }
-        break;
       case "contentPurger":
         setRunning(true);
         setStatus("Initializing...");
@@ -229,77 +256,41 @@ const AdminToolsContent = () => {
     );
   }
 
-  // Render specific views with home button wrapper
+  // Render specific views
   if (state.currentView === 'componentAudit') {
+    const currentSpace = state.selectedSpaceIndex >= 0 ? 
+      state.spaces[state.selectedSpaceIndex] : 
+      { name: "Current Space", publicKey: appState.user.currentOrganization, privateKey: "" };
+      
     return (
-      <div style={{ position: 'relative' }}>
-        <ComponentAuditView
-          space={state.spaces[state.selectedSpaceIndex]}
-          report={componentAudit.report}
-          status={componentAudit.status}
-          onBack={() => setCurrentView('main')}
-        />
-        {/* Floating Home Button */}
-        <button
-          onClick={() => setCurrentView('main')}
-          className="admin-tools-button-secondary"
-          style={{
-            position: 'fixed',
-            top: '20px',
-            right: '20px',
-            zIndex: 1000,
-            fontSize: '14px',
-            padding: '8px 16px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-            border: '2px solid #e5e7eb'
-          }}
-          title="Return to home"
-        >
-          🏠 Home
-        </button>
-      </div>
+      <ComponentAuditView
+        space={currentSpace}
+        report={componentAudit.report}
+        status={componentAudit.status}
+        onBack={() => setCurrentView('main')}
+      />
     );
   }
 
   if (state.currentView === 'modelSelection') {
     return (
-      <div style={{ position: 'relative' }}>
-        <ModelSelection
-          spaces={state.spaces}
-          selectedSpaceIndex={state.selectedSpaceIndex}
-          availableModels={modelSync.availableModels}
-          selectedModels={modelSync.selectedModels}
-          running={modelSync.running}
-          status={modelSync.status}
-          onBack={() => setCurrentView('main')}
-          onToggleModel={modelSync.toggleModelSelection}
-          onSelectAll={modelSync.selectAllModels}
-          onDeselectAll={modelSync.deselectAllModels}
-          onExport={() => modelSync.exportSelectedModels(state.spaces[state.selectedSpaceIndex])}
-          onMigrate={() => {
-            // TODO: Implement migration target selection
-            setStatus("Migration target selection not yet implemented");
-          }}
-        />
-        {/* Floating Home Button */}
-        <button
-          onClick={() => setCurrentView('main')}
-          className="admin-tools-button-secondary"
-          style={{
-            position: 'fixed',
-            top: '20px',
-            right: '20px',
-            zIndex: 1000,
-            fontSize: '14px',
-            padding: '8px 16px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-            border: '2px solid #e5e7eb'
-          }}
-          title="Return to home"
-        >
-          🏠 Home
-        </button>
-      </div>
+      <ModelSelection
+        spaces={state.spaces}
+        selectedSpaceIndex={state.selectedSpaceIndex}
+        availableModels={modelSync.availableModels}
+        selectedModels={modelSync.selectedModels}
+        running={modelSync.running}
+        status={modelSync.status}
+        onBack={() => setCurrentView('main')}
+        onToggleModel={modelSync.toggleModelSelection}
+        onSelectAll={modelSync.selectAllModels}
+        onDeselectAll={modelSync.deselectAllModels}
+        onExport={() => modelSync.exportSelectedModels(state.spaces[state.selectedSpaceIndex])}
+        onMigrate={() => {
+          // TODO: Implement migration target selection
+          setStatus("Migration target selection not yet implemented");
+        }}
+      />
     );
   }
 
@@ -326,8 +317,8 @@ const AdminToolsContent = () => {
               />
             </div>
 
-            {/* Space Selection Section - Show After Feature */}
-            {state.selectedFeature && (
+            {/* Space Selection Section - Show After Feature (except for Component Audit) */}
+            {state.selectedFeature && state.selectedFeature !== 'componentAudit' && (
               <div className="admin-tools-section-spacing">
                 <h2 className="admin-tools-section-title">Select Space</h2>
                 <SpaceSelector
@@ -338,8 +329,9 @@ const AdminToolsContent = () => {
               </div>
             )}
 
-            {/* Action Section */}
-            {state.selectedSpaceIndex >= 0 && state.selectedFeature && state.selectedFeature !== 'modelSync' && (
+            {/* Action Section - Show for all features except modelSync and componentAudit */}
+            {(state.selectedSpaceIndex >= 0 && state.selectedFeature && 
+              state.selectedFeature !== 'modelSync' && state.selectedFeature !== 'componentAudit') && (
               <div className="admin-tools-border-top">
                 <div className="admin-tools-exec-header">
                   <div>
@@ -350,7 +342,10 @@ const AdminToolsContent = () => {
                         state.selectedFeature === 'contentPurger' ? 'Content Purger' :
                         state.selectedFeature
                       }</strong> on{' '}
-                      <strong>{state.spaces[state.selectedSpaceIndex].name}</strong>
+                      <strong>{
+                        state.selectedFeature === 'componentAudit' ? 'Current Space' :
+                        state.spaces[state.selectedSpaceIndex].name
+                      }</strong>
                     </p>
                   </div>
                 </div>

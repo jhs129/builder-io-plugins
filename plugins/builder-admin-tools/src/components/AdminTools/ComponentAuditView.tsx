@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ComponentUsageReport } from './hooks/useComponentAudit';
+import { ExpandableSection } from './ExpandableSection';
 
 interface Space {
   name: string;
@@ -21,6 +22,12 @@ export const ComponentAuditView: React.FC<ComponentAuditViewProps> = ({
   onBack
 }) => {
   const [showBuilderComponents, setShowBuilderComponents] = useState(false);
+  const [expandedComponents, setExpandedComponents] = useState<Set<string>>(new Set());
+
+  // Debug logging
+  React.useEffect(() => {
+    console.log('ComponentAuditView: expandedComponents changed:', Array.from(expandedComponents));
+  }, [expandedComponents]);
 
   const filteredComponents = report.filter(component => 
     showBuilderComponents || !component.componentName.startsWith('@builder.io')
@@ -29,6 +36,28 @@ export const ComponentAuditView: React.FC<ComponentAuditViewProps> = ({
   return (
     <div className="admin-tools-container">
       <div className="admin-tools-max-width">
+        {/* Breadcrumb Navigation */}
+        <div style={{ marginBottom: '16px' }}>
+          <nav style={{ fontSize: '14px', color: '#6b7280' }}>
+            <button
+              onClick={onBack}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#3b82f6',
+                cursor: 'pointer',
+                textDecoration: 'underline',
+                fontSize: '14px',
+                padding: 0
+              }}
+            >
+              Admin Tools
+            </button>
+            <span style={{ margin: '0 8px' }}>→</span>
+            <span style={{ color: '#374151', fontWeight: 500 }}>Component Audit Report</span>
+          </nav>
+        </div>
+
         {/* Header */}
         <div className="admin-tools-header">
           <h1 className="admin-tools-title">Component Audit Report</h1>
@@ -145,74 +174,92 @@ export const ComponentAuditView: React.FC<ComponentAuditViewProps> = ({
                         
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                           <button
-                            onClick={() => {
-                              const details = document.getElementById(`component-details-${index}`);
-                              if (details) {
-                                details.style.display = details.style.display === 'none' ? 'block' : 'none';
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              console.log('Button clicked for:', component.componentName);
+                              console.log('Current expandedComponents:', Array.from(expandedComponents));
+                              
+                              const newExpanded = new Set(expandedComponents);
+                              const wasExpanded = newExpanded.has(component.componentName);
+                              
+                              if (wasExpanded) {
+                                newExpanded.delete(component.componentName);
+                                console.log('Collapsing component:', component.componentName);
+                              } else {
+                                newExpanded.add(component.componentName);
+                                console.log('Expanding component:', component.componentName);
                               }
+                              
+                              console.log('New expandedComponents:', Array.from(newExpanded));
+                              setExpandedComponents(newExpanded);
                             }}
                             className="admin-tools-button-secondary"
-                            style={{ fontSize: '12px', padding: '4px 8px' }}
+                            style={{ 
+                              fontSize: '12px', 
+                              padding: '4px 8px',
+                              cursor: 'pointer',
+                              userSelect: 'none'
+                            }}
                           >
-                            {component.usageCount === 1 ? 'View Page' : 'View Pages'}
+                            {expandedComponents.has(component.componentName) ? '−' : '+'}
                           </button>
                         </div>
                       </div>
 
-                      {/* Component Details (initially hidden) */}
-                      <div 
-                        id={`component-details-${index}`}
-                        style={{ 
-                          display: 'none',
-                          backgroundColor: '#f8f9fa',
-                          borderBottom: index < filteredComponents.length - 1 ? '1px solid #e5e7eb' : 'none'
-                        }}
+                      {/* Component Details */}
+                      <ExpandableSection
+                        isExpanded={expandedComponents.has(component.componentName)}
                       >
-                        <div style={{ padding: '16px', paddingLeft: '32px' }}>
-                          <h4 style={{ 
-                            margin: '0 0 12px 0', 
-                            fontSize: '13px', 
-                            fontWeight: 600, 
-                            color: '#374151' 
-                          }}>
-                            Pages using {component.componentName}:
-                          </h4>
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            {component.pages.map((page) => (
-                              <div key={page.id} style={{ 
-                                display: 'flex', 
-                                justifyContent: 'space-between', 
-                                alignItems: 'center',
-                                padding: '8px 12px',
-                                backgroundColor: 'white',
-                                borderRadius: '4px',
-                                border: '1px solid #e5e7eb'
-                              }}>
-                                <span style={{ 
-                                  fontSize: '13px', 
-                                  color: '#111827',
-                                  fontWeight: 500
+                        <div style={{ 
+                          borderBottom: index < filteredComponents.length - 1 ? '1px solid #e5e7eb' : 'none'
+                        }}>
+                          <div style={{ padding: '16px', paddingLeft: '32px' }}>
+                            <h4 style={{ 
+                              margin: '0 0 12px 0', 
+                              fontSize: '13px', 
+                              fontWeight: 600, 
+                              color: '#374151' 
+                            }}>
+                              Usage of {component.componentName}:
+                            </h4>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                              {component.pages.map((page) => (
+                                <div key={page.id} style={{ 
+                                  display: 'flex', 
+                                  justifyContent: 'space-between', 
+                                  alignItems: 'center',
+                                  padding: '8px 12px',
+                                  backgroundColor: 'white',
+                                  borderRadius: '4px',
+                                  border: '1px solid #e5e7eb'
                                 }}>
-                                  {page.name}
-                                </span>
-                                <a
-                                  href={page.editUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="admin-tools-button-secondary"
-                                  style={{ 
-                                    fontSize: '11px', 
-                                    padding: '4px 8px',
-                                    textDecoration: 'none'
-                                  }}
-                                >
-                                  Edit Page →
-                                </a>
-                              </div>
-                            ))}
+                                  <span style={{ 
+                                    fontSize: '13px', 
+                                    color: '#111827',
+                                    fontWeight: 500
+                                  }}>
+                                    {page.name}
+                                  </span>
+                                  <a
+                                    href={page.editUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="admin-tools-button-secondary"
+                                    style={{ 
+                                      fontSize: '11px', 
+                                      padding: '4px 8px',
+                                      textDecoration: 'none'
+                                    }}
+                                  >
+                                    Edit
+                                  </a>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </ExpandableSection>
                     </div>
                   ))}
                 </div>

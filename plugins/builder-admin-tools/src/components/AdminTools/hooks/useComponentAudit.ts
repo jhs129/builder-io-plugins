@@ -66,6 +66,51 @@ export const useComponentAudit = () => {
     }
   };
 
+  const runComponentAuditForModels = async (space: Space, modelNames: string[]): Promise<ComponentUsageReport[]> => {
+    setRunning(true);
+    setStatus("Analyzing component usage...");
+
+    try {
+      setStatus(`Fetching content from ${modelNames.join(', ')} models...`);
+
+      // Fetch content for specified models
+      const allPages: PageContent[] = [];
+      for (const modelName of modelNames) {
+        setStatus(`Fetching content for ${modelName} model...`);
+        try {
+          const pages = await getPageContent(space.publicKey, modelName);
+          allPages.push(...pages);
+          setStatus(`Found ${pages.length} ${modelName} entries`);
+        } catch (error) {
+          console.warn(`Failed to fetch ${modelName} content:`, error);
+          setStatus(`Warning: Could not fetch ${modelName} content. Continuing with other models...`);
+        }
+      }
+
+      if (allPages.length === 0) {
+        setStatus("No content found in any of the specified models");
+        setRunning(false);
+        return [];
+      }
+
+      setStatus(`Analyzing ${allPages.length} pages for component usage...`);
+
+      // Analyze component usage
+      const auditReport = analyzeComponentUsage(allPages);
+
+      setReport(auditReport);
+      setStatus(`✅ Component audit completed. Found ${auditReport.length} unique components across ${allPages.length} pages.`);
+      
+      return auditReport;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      setStatus(`Error running component audit: ${errorMessage}`);
+      throw error;
+    } finally {
+      setRunning(false);
+    }
+  };
+
   const analyzeComponentUsage = (pages: PageContent[]): ComponentUsageReport[] => {
     const componentMap = new Map<string, ComponentUsageReport>();
     
@@ -105,6 +150,7 @@ export const useComponentAudit = () => {
     running,
     status,
     runComponentAudit,
+    runComponentAuditForModels,
     clearReport
   };
 };
