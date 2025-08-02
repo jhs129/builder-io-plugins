@@ -219,11 +219,11 @@
 }
 
 .admin-tools-button:hover:not(:disabled) {
-  background-color: #2563eb;
+  background-color: white;
 }
 
 .admin-tools-button:disabled {
-  background-color: #9ca3af;
+  background-color: gray;
   cursor: not-allowed;
 }
 

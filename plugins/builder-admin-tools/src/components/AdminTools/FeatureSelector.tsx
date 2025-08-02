@@ -57,7 +57,7 @@ export const FeatureSelector: React.FC<FeatureSelectorProps> = ({
         >
           Model Synchronization
         </button>
-        <button
+        {/* <button
           onClick={() => onFeatureChange('contentPurger')}
           className={`admin-tools-button feature-selector-button ${
             selectedFeature === 'contentPurger'
@@ -66,6 +66,16 @@ export const FeatureSelector: React.FC<FeatureSelectorProps> = ({
           }`}
         >
           Content Purger
+        </button> */}
+        <button
+          onClick={() => onFeatureChange('componentAudit')}
+          className={`admin-tools-button feature-selector-button ${
+            selectedFeature === 'componentAudit'
+              ? 'feature-selector-button-selected'
+              : ''
+          }`}
+        >
+          Component Audit
         </button>
       </div>
     </>

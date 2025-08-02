@@ -48,6 +48,16 @@ Builder.register("plugin", {
         },
       ],
     },
+    {
+      name: "enableModelSync",
+      type: "boolean",
+      friendlyName: "Enable Model Sync",
+    },
+    {
+      name: "showDebug",
+      type: "boolean",
+      friendlyName: "Show Debug",
+    },
   ],
   
   //Modify the save button text
