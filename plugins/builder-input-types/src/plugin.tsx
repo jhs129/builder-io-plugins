@@ -4,6 +4,7 @@ const pluginId = pkg.name;
 import CMSLink from './components/CMSLinkInput';
 import { HelloWorld } from '@builder-plugins';
 import './styles.css';
+import 'builder-plugins/dist/index.css';
 
 Builder.registerEditor({
   name: 'CMSLink',

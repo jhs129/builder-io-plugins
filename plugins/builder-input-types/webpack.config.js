@@ -42,6 +42,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        exclude: [
+          /builder-plugins/,
+          /packages\/builder-plugins/,
+        ],
         use: [
           "style-loader",
           {
@@ -55,6 +59,17 @@ module.exports = {
               sourceMap: true,
             },
           },
+        ],
+      },
+      {
+        test: /\.css$/,
+        include: [
+          /builder-plugins/,
+          /packages\/builder-plugins/,
+        ],
+        use: [
+          "style-loader",
+          "css-loader",
         ],
       },
     ],
