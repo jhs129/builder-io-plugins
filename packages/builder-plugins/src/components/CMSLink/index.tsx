@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { builder } from "@builder.io/react";
 import { ContentSelector } from "../ContentSelector";
-import "../../styles.css";
 
 export interface CMSLinkProps {
   value: {

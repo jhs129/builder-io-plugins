@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import { SearchModelSelectorProps } from "./types";
 import { SearchModal } from "./SearchModal";
-import "./index.css";
 
 
 export const SearchModelSelector: React.FC<SearchModelSelectorProps> = ({

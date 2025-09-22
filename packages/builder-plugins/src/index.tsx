@@ -1,5 +1,3 @@
-import "./components/SearchModelSelector/index.css";
-
 export { SearchModelSelector as ModelSelector } from "./components/SearchModelSelector";
 export { CMSLink } from "./components/CMSLink";
 export { ContentSelector } from "./components/ContentSelector";
