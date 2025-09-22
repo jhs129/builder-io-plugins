@@ -20,6 +20,9 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".css"],
+    alias: {
+      "@builder-plugins": path.resolve(__dirname, "../../packages/builder-plugins/src"),
+    },
   },
   module: {
     rules: [
