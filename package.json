@@ -6,7 +6,8 @@
   "packageManager": "npm@10.0.0",
   "workspaces": [
     "plugins/*",
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
     "build": "turbo build",
@@ -19,7 +20,11 @@
     "type": "git",
     "url": "git+https://github.com/jhs129/builder-io-plugins.git"
   },
-  "keywords": ["builder.io", "plugins", "monorepo"],
+  "keywords": [
+    "builder.io",
+    "plugins",
+    "monorepo"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -27,6 +32,7 @@
   },
   "homepage": "https://github.com/jhs129/builder-io-plugins#readme",
   "devDependencies": {
+    "@storybook/react-webpack5": "^8.6.14",
     "@types/node": "^24.1.0",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
@@ -34,6 +40,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.3",
     "prettier": "^3.6.2",
+    "ts-loader": "^9.5.1",
     "turbo": "^2.5.5",
     "typescript": "^5.8.3"
   }

@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { builder } from "@builder.io/react";
 import { ContentSelector } from "../ContentSelector";
-import "../../styles.css";
+import styles from "./CMSLink.module.css";
 
 export interface CMSLinkProps {
   value: {
@@ -164,63 +164,63 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
   };
 
   return (
-    <div className="w-full space-y-2">
-      <p className="text-red-500">Tailwind test</p>
-      <div className="flex flex-col gap-2 w-full">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-4">
-            <label className="whitespace-nowrap flex items-center min-w-[40px]">
+    <div className={styles.container}>
+      <p className={styles.testText}>CSS Modules test</p>
+      <div className={styles.formGroup}>
+        <div className={styles.fieldRow}>
+          <div className={styles.typeSelector}>
+            <label className={styles.typeLabel}>
               Type:
             </label>
-            <div className="flex gap-4">
-              <label className="flex items-center gap-1 cursor-pointer">
+            <div className={styles.radioGroup}>
+              <label className={styles.radioLabel}>
                 <input
                   type="radio"
                   name="linkType"
                   value="url"
                   checked={type === "url"}
                   onChange={() => handleTypeChange("url")}
-                  className="cursor-pointer"
+                  className={styles.radioInput}
                 />
                 URL
               </label>
-              <label className="flex items-center gap-1 cursor-pointer">
+              <label className={styles.radioLabel}>
                 <input
                   type="radio"
                   name="linkType"
                   value="model"
                   checked={type === "model"}
                   onChange={() => handleTypeChange("model")}
-                  className="cursor-pointer"
+                  className={styles.radioInput}
                 />
                 Reference
               </label>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className={styles.inputRow}>
             {type === "url" ? (
               <input
                 id="link"
                 type="text"
                 value={href}
                 onChange={handleLinkChange}
-                className="flex-1 h-8 px-2 py-1 rounded border border-gray-300 text-sm"
+                className={styles.textInput}
                 placeholder="Enter URL..."
               />
             ) : (
-              <div className="flex items-center gap-2 w-full">
-                <label className="whitespace-nowrap">Href:</label>
+              <div className={styles.inputGroup}>
+                <label className={styles.hrefLabel}>Href:</label>
                 <input
                   type="text"
                   value={selectedContentName || "No model selected..."}
                   readOnly
-                  className="flex-1 h-8 px-2 py-1 rounded border border-gray-300 text-sm bg-neutral-100 text-gray-500 cursor-not-allowed"
+                  className={styles.readOnlyInput}
                   placeholder="No model selected..."
                 />
                 <button
                   onClick={() => setIsContentSelectorOpen(true)}
-                  className="h-8 px-6 py-1 rounded text-sm font-medium whitespace-nowrap transition-colors bg-blue-500 text-neutral-100 hover:bg-blue-600 active:bg-blue-700"
+                  className={styles.selectButton}
                   aria-label="Select Content"
                 >
                   Select
@@ -232,30 +232,11 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
       </div>
 
       {error && (
-        <div className="mt-4 p-4 bg-red-50 text-red-700 rounded">
-          <div>{error.message}</div>
-          {error.stack && <div className="mt-2 text-sm">{error.stack}</div>}
+        <div className={styles.errorContainer}>
+          <div className={styles.errorMessage}>{error.message}</div>
+          {error.stack && <div className={styles.errorStack}>{error.stack}</div>}
         </div>
       )}
-      <div className="hidden">
-      <h3 className="text-red-500">Component State</h3>
-        <pre>
-          {JSON.stringify(
-            {
-              incomingValue: value,
-              currentState: {
-                type,
-                href,
-                model,
-                referenceId,
-              },
-              error,
-            },
-            null,
-            2
-          )}
-        </pre>
-      </div>
 
       {isContentSelectorOpen && (
         <ContentSelector

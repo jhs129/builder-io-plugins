@@ -1,8 +1,8 @@
 import React from "react";
-import { CMSLink as SharedCMSLink } from "builder-plugins";
+import { CMSLink } from "builder-plugins";
 import appState from "@builder.io/app-context";
 
-export interface CMSLinkProps {
+export interface CMSLinkInputProps {
   value?: {
     get(key: "type" | "href" | "model" | "referenceId"): string | undefined;
     type: "url" | "model";
@@ -19,7 +19,7 @@ export interface CMSLinkProps {
   defaultType?: "url" | "model";
 }
 
-const CMSLink: React.FC<CMSLinkProps> = ({ value, onChange, defaultType = "url" }) => {
+const CMSLinkInput: React.FC<CMSLinkInputProps> = ({ value, onChange, defaultType = "url" }) => {
   // Get plugin settings from appState
   const pluginSettings = (appState as any)?.user?.organization?.value?.settings?.plugins?.get?.("@jhsdc/builder-input-types");
 
@@ -68,7 +68,7 @@ const CMSLink: React.FC<CMSLinkProps> = ({ value, onChange, defaultType = "url" 
   };
 
   return (
-    <SharedCMSLink
+    <CMSLink
       value={currentValue}
       onChange={handleChange}
       defaultType={defaultType}
@@ -78,4 +78,4 @@ const CMSLink: React.FC<CMSLinkProps> = ({ value, onChange, defaultType = "url" 
   );
 };
 
-export default CMSLink;
+export default CMSLinkInput;

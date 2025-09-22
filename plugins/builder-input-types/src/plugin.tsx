@@ -1,9 +1,8 @@
 import { Builder } from "@builder.io/react";
 import pkg from "../package.json";
 const pluginId = pkg.name;
-import CMSLink from "./components/CMSLink";
+import CMSLink from "./components/CMSLinkInput";
 import "./styles.css";
-import "../../../packages/builder-plugins/src/styles.css";
 
 
 
