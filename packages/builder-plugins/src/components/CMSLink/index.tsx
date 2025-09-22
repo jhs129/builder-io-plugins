@@ -1,29 +1,26 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import { SearchModelSelector } from "../SearchModelSelector";
-import type { RegionalCareSiteId } from "../SearchModelSelector/types";
+import { builder } from "@builder.io/react";
+import { ContentSelector } from "../ContentSelector";
 
 export interface CMSLinkProps {
   value: {
     get(key: "type" | "href" | "model" | "referenceId"): string | undefined;
-    type: "url" | "model" | "reference";
+    type: "url" | "model";
     href: string;
     model?: string;
     referenceId?: string;
   };
   onChange: (value: {
-    type: "url" | "model" | "reference";
+    type: "url" | "model";
     href: string;
     model?: string;
     referenceId?: string;
   }) => void;
   defaultType?: "url" | "model";
   apiKey: string;
-  appId: string;
-  regionalCareSite?: RegionalCareSiteId;
-  locale: string;
-  indexes: {
+  models: {
     name: string;
-    model: string;
+    displayName: string;
   }[];
 }
 
@@ -32,19 +29,51 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
   onChange,
   defaultType = "url",
   apiKey,
-  appId,
-  indexes,
-  regionalCareSite,
-  locale = "en",
+  models,
 }) => {
   const [type, setType] = useState<"url" | "model">(defaultType);
   const [href, setHref] = useState("");
   const [model, setModel] = useState("");
   const [referenceId, setReferenceId] = useState("");
+  const [selectedModel, setSelectedModel] = useState("");
+  const [isContentSelectorOpen, setIsContentSelectorOpen] = useState(false);
+  const [selectedContentName, setSelectedContentName] = useState("");
   const [error, setError] = useState<{
     message: string;
     stack?: string;
   } | null>(null);
+
+  // Function to fetch content name from Builder.io
+  const fetchContentName = async (modelName: string, contentId: string) => {
+    try {
+      // Initialize builder if not already done
+      if (!builder.apiKey && apiKey) {
+        builder.init(apiKey);
+        builder.apiVersion = "v3";
+      }
+
+      const content = await builder.get(modelName, {
+        query: {
+          id: contentId
+        },
+        fields: "id,name,data.title",
+        options: {
+          noTargeting: true,
+          includeRefs: true,
+        },
+      });
+
+      if (content) {
+        const contentName = content.name || content.data?.title || contentId;
+        setSelectedContentName(contentName);
+      } else {
+        setSelectedContentName("Content not found");
+      }
+    } catch (error) {
+      console.error("Error fetching content name:", error);
+      setSelectedContentName("Error loading content");
+    }
+  };
 
   // Initialize state from value when component mounts
   useEffect(() => {
@@ -58,8 +87,16 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
       setHref(savedHref || "");
       setModel(savedModel || "");
       setReferenceId(savedRefId || "");
+      setSelectedModel(savedModel || "");
+
+      // If we have a model and referenceId, fetch the content name
+      if (savedModel && savedRefId) {
+        fetchContentName(savedModel, savedRefId);
+      } else {
+        setSelectedContentName("");
+      }
     }
-  }, [value, defaultType]);
+  }, [value, defaultType, apiKey]);
 
   // Add debug logging to updateValue
   const updateValue = (newValues: Record<string, string>) => {
@@ -86,13 +123,43 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
   // Add debug logging to handlers
   const handleTypeChange = (newType: "url" | "model") => {
     setType(newType);
-    updateValue({ type: newType });
+
+    if (newType === "url") {
+      // Clear model-related fields when switching to URL type
+      setModel("");
+      setReferenceId("");
+      setSelectedModel("");
+      setSelectedContentName("");
+      updateValue({
+        type: newType,
+        model: "",
+        referenceId: ""
+      });
+    } else {
+      // Just update the type for model
+      updateValue({ type: newType });
+    }
   };
 
   const handleLinkChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newHref = e.target.value;
     setHref(newHref);
     updateValue({ href: newHref });
+  };
+
+  const handleContentSelect = (content: any) => {
+    setHref(content.href);
+    setReferenceId(content.id);
+    setModel(content.type);
+    setSelectedContentName(content.name);
+    setType("model");
+
+    updateValue({
+      type: "model",
+      href: content.href,
+      referenceId: content.id,
+      model: content.type,
+    });
   };
 
   return (
@@ -140,31 +207,22 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
                 placeholder="Enter URL..."
               />
             ) : (
-              <div className="flex-1">
-                <div className="ml-0">
-                  <SearchModelSelector
-                    href={href}
-                    referenceId={referenceId}
-                    apiKey={apiKey}
-                    appId={appId}
-                    indexes={indexes}
-                    regionalCareSite={regionalCareSite}
-                    locale={locale}
-                    onModelSelect={(instance) => {
-                      setHref(instance.href);
-                      setReferenceId(instance.id);
-                      setModel(instance.type);
-                      setType("model");
-
-                      updateValue({
-                        type: "model",
-                        href: instance.href,
-                        referenceId: instance.id,
-                        model: instance.type,
-                      });
-                    }}
-                  />
-                </div>
+              <div className="flex items-center gap-2 w-full">
+                <label className="whitespace-nowrap">Href:</label>
+                <input
+                  type="text"
+                  value={selectedContentName || "No model selected..."}
+                  readOnly
+                  className="flex-1 h-8 px-2 py-1 rounded border border-gray-300 text-sm bg-neutral-100 text-gray-500 cursor-not-allowed"
+                  placeholder="No model selected..."
+                />
+                <button
+                  onClick={() => setIsContentSelectorOpen(true)}
+                  className="h-8 px-6 py-1 rounded text-sm font-medium whitespace-nowrap transition-colors bg-blue-500 text-neutral-100 hover:bg-blue-600 active:bg-blue-700"
+                  aria-label="Select Content"
+                >
+                  Select
+                </button>
               </div>
             )}
           </div>
@@ -196,6 +254,15 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
           )}
         </pre>
       </div>
+
+      {isContentSelectorOpen && (
+        <ContentSelector
+          models={models}
+          apiKey={apiKey}
+          onContentSelect={handleContentSelect}
+          onClose={() => setIsContentSelectorOpen(false)}
+        />
+      )}
     </div>
   );
 };

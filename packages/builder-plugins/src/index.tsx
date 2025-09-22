@@ -1,5 +1,6 @@
 export { SearchModelSelector as ModelSelector } from "./components/SearchModelSelector";
 export { CMSLink } from "./components/CMSLink";
+export { ContentSelector } from "./components/ContentSelector";
 export { ConfigurationStatus } from "./components/ConfigurationStatus";
 export { CustomSelect } from "./components/CustomSelect";
 export { StatusDisplay } from "./components/StatusDisplay";
