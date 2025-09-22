@@ -27,6 +27,7 @@
     "@builder.io/react": "^8.0.12",
     "@emotion/core": "^11.0.0",
     "@eslint/js": "^9.25.1",
+    "@tailwindcss/postcss": "^4.1.13",
     "@types/node": "^22.10.7",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.6",

@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { builder } from "@builder.io/react";
 import { ContentSelector } from "../ContentSelector";
+import "../../styles.css";
 
 export interface CMSLinkProps {
   value: {
@@ -236,8 +237,8 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
         </div>
       )}
       <div className="hidden">
+      <h3 className="text-red-500">Component State</h3>
         <pre>
-          <h3>Component State</h3>
           {JSON.stringify(
             {
               incomingValue: value,

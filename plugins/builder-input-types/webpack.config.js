@@ -39,6 +39,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        include: path.resolve(__dirname, "src"),
         use: [
           "style-loader",
           "css-loader",
@@ -47,12 +48,20 @@ module.exports = {
             options: {
               postcssOptions: {
                 plugins: [
-                  require("@tailwindcss/postcss7-compat"),
+                  require("@tailwindcss/postcss"),
                   require("autoprefixer"),
                 ],
               },
             },
           },
+        ],
+      },
+      {
+        test: /\.css$/,
+        include: path.resolve(__dirname, "../../packages/builder-plugins/dist"),
+        use: [
+          "style-loader",
+          "css-loader",
         ],
       },
     ],

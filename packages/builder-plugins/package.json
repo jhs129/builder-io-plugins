@@ -8,7 +8,8 @@
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.js"
-    }
+    },
+    "./dist/index.css": "./dist/index.css"
   },
   "sideEffects": false,
   "license": "MIT",
