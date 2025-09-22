@@ -16,7 +16,7 @@
     "type-check": "tsc --noEmit",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
-  "author": "Orlando Health",
+  "author": "JHS Digital Consulting",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.26.0",

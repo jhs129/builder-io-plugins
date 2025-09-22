@@ -3,7 +3,7 @@ import { builder } from "@builder.io/react";
 import appState from "@builder.io/app-context";
 
 // Initialize builder
-const apiKey = appState.user.organization.value.settings.publicKey || "";
+const apiKey = appState.user.currentOrganization || "";
 if (apiKey) {
   builder.init(apiKey);
   builder.apiVersion = "v3";
