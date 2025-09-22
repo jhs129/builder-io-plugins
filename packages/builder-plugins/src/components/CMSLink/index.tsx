@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { builder } from "@builder.io/react";
 import { ContentSelector } from "../ContentSelector";
+import "../../styles.css";
 
 export interface CMSLinkProps {
   value: {
@@ -164,6 +165,7 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
 
   return (
     <div className="w-full space-y-2">
+      <p className="text-red-500">Tailwind test</p>
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-4">
