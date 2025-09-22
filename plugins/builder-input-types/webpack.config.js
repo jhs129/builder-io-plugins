@@ -39,29 +39,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: path.resolve(__dirname, "src"),
         use: [
           "style-loader",
           "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                plugins: [
-                  require("@tailwindcss/postcss"),
-                  require("autoprefixer"),
-                ],
-              },
-            },
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        include: path.resolve(__dirname, "../../packages/builder-plugins/dist"),
-        use: [
-          "style-loader",
-          "css-loader",
+          "postcss-loader",
         ],
       },
     ],

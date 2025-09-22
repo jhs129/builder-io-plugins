@@ -3,7 +3,7 @@ import pkg from "../package.json";
 const pluginId = pkg.name;
 import CMSLink from "./components/CMSLink";
 import "./styles.css";
-import "builder-plugins/dist/index.css";
+import "../../../packages/builder-plugins/src/styles.css";
 
 
 

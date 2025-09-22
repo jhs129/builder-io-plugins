@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Custom CSS for Admin Tools Plugin */
 .admin-tools-container {
   min-height: 100vh;
