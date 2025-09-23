@@ -1,6 +1,7 @@
 import React from "react";
 import { CMSLink } from "builder-plugins";
 import appState from "@builder.io/app-context";
+import HelloWorld from "builder-plugins";
 
 export interface CMSLinkInputProps {
   value?: {
@@ -68,13 +69,16 @@ const CMSLinkInput: React.FC<CMSLinkInputProps> = ({ value, onChange, defaultTyp
   };
 
   return (
+    <div>
+      <p className="text-red-500">CMS Link Input</p>
     <CMSLink
       value={currentValue}
       onChange={handleChange}
       defaultType={defaultType}
-      apiKey={apiKey}
-      models={models}
-    />
+        apiKey={apiKey}
+        models={models}
+      />
+    </div>
   );
 };
 

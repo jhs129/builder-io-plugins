@@ -2,12 +2,13 @@ import { Builder } from '@builder.io/react';
 import pkg from '../package.json';
 const pluginId = pkg.name;
 import { HelloWorld } from '@builder-plugins';
+import CMSLinkInput from './components/CMSLinkInput';
 import './styles.css';
 import 'builder-plugins/dist/index.css';
 
 Builder.registerEditor({
   name: 'CMSLink',
-  component: HelloWorld,
+  component: CMSLinkInput,
 });
 
 Builder.register('plugin', {
