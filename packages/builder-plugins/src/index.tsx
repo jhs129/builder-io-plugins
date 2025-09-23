@@ -10,4 +10,3 @@ export type {
 } from "./components/SearchModelSelector/types";
 export type { CMSLinkProps } from "./components/CMSLink";
 export type { HelloWorldProps } from "./components/HelloWorld";
-export { ClinicalTrialImporter } from "./components/ClinicalTrialImporter";

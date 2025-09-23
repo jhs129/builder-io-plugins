@@ -1,7 +1,6 @@
 import { Builder } from '@builder.io/react';
 import pkg from '../package.json';
 const pluginId = pkg.name;
-import CMSLink from './components/CMSLinkInput';
 import { HelloWorld } from '@builder-plugins';
 import './styles.css';
 import 'builder-plugins/dist/index.css';

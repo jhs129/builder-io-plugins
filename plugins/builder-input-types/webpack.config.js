@@ -27,49 +27,16 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(tsx|ts|jsx|js)$/,
+        test: /\.tsx?$/,
+        use: "ts-loader",
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-              "@babel/preset-typescript",
-            ],
-          },
-        },
       },
       {
         test: /\.css$/,
-        exclude: [
-          /builder-plugins/,
-          /packages\/builder-plugins/,
-        ],
         use: [
           "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                auto: true,
-                localIdentName: "[name]__[local]--[hash:base64:5]",
-              },
-              importLoaders: 0,
-              sourceMap: true,
-            },
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        include: [
-          /builder-plugins/,
-          /packages\/builder-plugins/,
-        ],
-        use: [
-          "style-loader",
-          "css-loader",
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          "postcss-loader",
         ],
       },
     ],
