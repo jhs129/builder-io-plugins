@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomSelect } from "builder-plugins";
+import { CustomSelect } from "@builder-plugins";
 
 interface Space {
   name: string;

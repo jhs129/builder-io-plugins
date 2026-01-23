@@ -1,7 +1,6 @@
-// contents of webpack.config.js
+// webpack.config.js
 const path = require("path");
 const pkg = require("./package.json");
-const webpack = require("webpack");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
@@ -10,7 +9,6 @@ module.exports = {
     "@builder.io/react": "@builder.io/react",
     "@builder.io/app-context": "@builder.io/app-context",
     "@emotion/core": "@emotion/core",
-    "@orlandohealth/build-kit": "@orlandohealth/build-kit",
     react: "react",
     "react-dom": "react-dom",
   },
@@ -22,41 +20,56 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".css"],
     alias: {
-      "@orlandohealth/build-kit": path.resolve(
+      "@builder-plugins": path.resolve(
         __dirname,
-        "../../packages/build-kit"
+        "../../packages/builder-plugins/src"
       ),
     },
   },
   module: {
     rules: [
       {
-        test: /\.(tsx|ts|jsx|js)$/,
+        test: /\.tsx?$/,
+        use: "ts-loader",
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-              "@babel/preset-typescript",
-            ],
-          },
-        },
       },
+
+      // --- Tailwind entry as STRING (inject manually) ---
       {
-        test: /\.css$/,
+        test: /tw\.css$/i,                  // <— name your entry file src/tw.css
         use: [
-          "style-loader",
-          "css-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              exportType: "string",        // <— gives you the CSS as text
+            },
+          },
           {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
                 plugins: [
-                  require("@tailwindcss/postcss7-compat"),
-                  require("autoprefixer"),
+                  require("@tailwindcss/postcss"), // Tailwind v4
                 ],
+              },
+            },
+          },
+        ],
+      },
+
+      // --- Generic CSS (NOT the Tailwind entry) ---
+      {
+        test: /\.css$/i,
+        exclude: /tw\.css$/i,              // <— avoid double-processing tw.css
+        use: [
+          "style-loader",
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [require("@tailwindcss/postcss")],
               },
             },
           },
@@ -66,9 +79,7 @@ module.exports = {
   },
   devServer: {
     port: 1269,
-    static: {
-      directory: path.join(__dirname, "./dist"),
-    },
+    static: { directory: path.join(__dirname, "./dist") },
     headers: {
       "Access-Control-Allow-Private-Network": "true",
       "Access-Control-Allow-Origin": "*",

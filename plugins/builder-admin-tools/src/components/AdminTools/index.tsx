@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import appState from "@builder.io/app-context";
 import { pluginId } from "../../utils";
-import { ConfigurationStatus, StatusDisplay } from "builder-plugins";
+import { ConfigurationStatus, StatusDisplay } from "@builder-plugins";
 import { SpaceSelector } from "./SpaceSelector";
 import { FeatureSelector } from "./FeatureSelector";
 import { ModelSelection } from "./ModelSelection";
