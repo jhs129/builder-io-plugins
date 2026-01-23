@@ -19,6 +19,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "@babel/preset-typescript": "^7.26.0",
@@ -52,7 +54,7 @@
     "@builder.io/admin-sdk": "^0.0.8",
     "@emotion/react": "^11.13.3",
     "algoliasearch": "^5.23.4",
-    "builder-plugins": "*",
+    "builder-plugins": "workspace:*",
     "react-instantsearch": "^7.15.5",
     "react-quill": "^2.0.0"
   }

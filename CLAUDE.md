@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Build and Development Commands
 
-- **Build all packages**: `npm run build` (uses Turbo for monorepo builds)
-- **Development mode**: `npm run dev` (starts webpack dev servers for all plugins)
-- **Linting**: `npm run lint` (ESLint across all packages)
-- **Type checking**: `npm run type-check` (TypeScript compilation check)
-- **Clean**: `npm run clean` (removes dist, .turbo, node_modules)
+- **Build all packages**: `pnpm run build` (uses Turbo for monorepo builds)
+- **Development mode**: `pnpm run dev` (starts webpack dev servers for all plugins)
+- **Linting**: `pnpm run lint` (ESLint across all packages)
+- **Type checking**: `pnpm run type-check` (TypeScript compilation check)
+- **Clean**: `pnpm run clean` (removes dist, .turbo, node_modules)
 
 For individual plugins:
 - Navigate to `plugins/<plugin-name>` and use same commands locally

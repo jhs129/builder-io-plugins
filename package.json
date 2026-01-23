@@ -3,12 +3,7 @@
   "version": "1.0.0",
   "description": "A monorepo for Builder.io plugins",
   "private": true,
-  "packageManager": "npm@10.0.0",
-  "workspaces": [
-    "plugins/*",
-    "packages/*",
-    "apps/*"
-  ],
+  "packageManager": "pnpm@9.15.0",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",

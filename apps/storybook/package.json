@@ -5,14 +5,14 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build": "npm run build-storybook",
-    "dev": "npm run storybook",
+    "build": "pnpm run build-storybook",
+    "dev": "pnpm run storybook",
     "lint": "echo 'No linting configured'",
     "type-check": "echo 'No type checking configured'",
     "clean": "rm -rf storybook-static .turbo node_modules"
   },
   "dependencies": {
-    "builder-plugins": "*",
+    "builder-plugins": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
