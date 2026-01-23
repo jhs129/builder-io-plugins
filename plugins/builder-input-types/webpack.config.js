@@ -1,7 +1,6 @@
-// contents of webpack.config.js
+// webpack.config.js
 const path = require("path");
 const pkg = require("./package.json");
-const webpack = require("webpack");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
@@ -21,7 +20,10 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".css"],
     alias: {
-      "@builder-plugins": path.resolve(__dirname, "../../packages/builder-plugins/src"),
+      "@builder-plugins": path.resolve(
+        __dirname,
+        "../../packages/builder-plugins/src"
+      ),
     },
   },
   module: {
@@ -31,8 +33,35 @@ module.exports = {
         use: "ts-loader",
         exclude: /node_modules/,
       },
+
+      // --- Tailwind entry as STRING (inject manually) ---
       {
-        test: /\.css$/,
+        test: /tw\.css$/i,                  // <— name your entry file src/tw.css
+        use: [
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              exportType: "string",        // <— gives you the CSS as text
+            },
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  require("@tailwindcss/postcss"), // Tailwind v4
+                ],
+              },
+            },
+          },
+        ],
+      },
+
+      // --- Generic CSS (NOT the Tailwind entry) ---
+      {
+        test: /\.css$/i,
+        exclude: /tw\.css$/i,              // <— avoid double-processing tw.css
         use: [
           "style-loader",
           { loader: "css-loader", options: { importLoaders: 1 } },
@@ -40,9 +69,7 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [
-                  require("@tailwindcss/postcss"),
-                ],
+                plugins: [require("@tailwindcss/postcss")],
               },
             },
           },
@@ -52,9 +79,7 @@ module.exports = {
   },
   devServer: {
     port: 1269,
-    static: {
-      directory: path.join(__dirname, "./dist"),
-    },
+    static: { directory: path.join(__dirname, "./dist") },
     headers: {
       "Access-Control-Allow-Private-Network": "true",
       "Access-Control-Allow-Origin": "*",
