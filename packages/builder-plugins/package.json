@@ -19,7 +19,7 @@
   "scripts": {
     "build:tailwind": "postcss src/styles.css -o dist/tailwind.css",
     "build:js": "tsup src/index.tsx --format esm,cjs --dts --external react --external next --splitting false",
-    "build:css": "cat dist/tailwind.css dist/index.css > dist/combined.css && mv dist/combined.css dist/index.css",
+    "build:css": "cp dist/tailwind.css dist/index.css",
     "build": "pnpm run build:tailwind && pnpm run build:js && pnpm run build:css",
     "dev": "pnpm run build:css && tsup src/index.tsx --format esm,cjs --watch --dts --external react --external next --splitting false",
     "lint": "eslint \"src/**/*.ts*\"",
