@@ -59,7 +59,6 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "algoliasearch": "^5.23.4",
     "instantsearch.js": "^4.0.0",
-    "react-instantsearch": "^7.0.0",
-    "xlsx": "^0.18.5"
+    "react-instantsearch": "^7.0.0"
   }
 }

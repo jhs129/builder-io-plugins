@@ -26,6 +26,15 @@
     "url": "https://github.com/jhs129/builder-io-plugins/issues"
   },
   "homepage": "https://github.com/jhs129/builder-io-plugins#readme",
+  "pnpm": {
+    "overrides": {
+      "lodash": "^4.17.21",
+      "node-fetch": "^2.6.7",
+      "postcss": "^8.4.31",
+      "webpack-dev-server": "^5.0.0",
+      "esbuild": "^0.25.0"
+    }
+  },
   "devDependencies": {
     "@storybook/react-webpack5": "^8.6.14",
     "@types/node": "^24.1.0",
