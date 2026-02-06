@@ -13,6 +13,7 @@
     "dev": "webpack-dev-server --mode development",
     "start": "webpack-dev-server --mode development",
     "lint": "eslint \"src/**/*.ts*\"",
+    "test:graphql": "node scripts/test-graphql-queries.mjs",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },

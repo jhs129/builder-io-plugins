@@ -49,8 +49,14 @@ export const useComponentAudit = () => {
       const allPages: PageContent[] = [];
       for (const model of pageModels) {
         setStatus(`Fetching content for model: ${model.name}...`);
-        const pages = await getPageContent(space.publicKey, model.name);
-        allPages.push(...pages);
+        try {
+          const pages = await getPageContent(space.publicKey, model.name);
+          allPages.push(...pages);
+          setStatus(`Found ${pages.length} ${model.name} entries`);
+        } catch (error) {
+          console.warn(`Failed to fetch ${model.name} content:`, error);
+          setStatus(`Warning: Could not fetch ${model.name} content. Continuing with other models...`);
+        }
       }
 
       setStatus(`Analyzing ${allPages.length} pages for component usage...`);
