@@ -1,17 +1,18 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from 'react';
 import {
   InstantSearch,
   SearchBox,
   Hits,
   Configure,
   Pagination,
-} from "react-instantsearch";
-import { history } from "instantsearch.js/es/lib/routers";
-import { SearchModalProps, HitProps } from "./types";
-import { FacetPanel } from "./FacetPanel";
-import { LocaleRefinementList } from "./LocaleRefinementList";
-import { Hit } from "./Hit";
-import { NoResults } from "./NoResults";
+} from 'react-instantsearch';
+import type { SearchClient } from 'instantsearch.js';
+import { history } from 'instantsearch.js/es/lib/routers';
+import { SearchModalProps, HitProps } from './types';
+import { FacetPanel } from './FacetPanel';
+import { LocaleRefinementList } from './LocaleRefinementList';
+import { Hit } from './Hit';
+import { NoResults } from './NoResults';
 
 export const SearchModal: React.FC<SearchModalProps> = ({
   isOpen,
@@ -22,10 +23,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({
   regionalCareSite,
   onModelSelect,
 }) => {
-  const [selectedHit, setSelectedHit] = useState<HitProps["hit"] | null>(null);
-  const [selectedModelType, setSelectedModelType] = useState<string>("");
-  const [currentIndex, setCurrentIndex] = useState<string>("");
-  const [debugPreview, setDebugPreview] = useState<any>(null);
+  const [selectedHit, setSelectedHit] = useState<HitProps['hit'] | null>(null);
+  const [selectedModelType, setSelectedModelType] = useState<string>('');
+  const [currentIndex, setCurrentIndex] = useState<string>('');
   const [showDebug, setShowDebug] = useState(false);
 
   const regionalCareSiteFilter = regionalCareSite
@@ -37,38 +37,27 @@ export const SearchModal: React.FC<SearchModalProps> = ({
     setSelectedModelType(modelType);
 
     const selectedIndex = indexes.find((index) => index.model === modelType);
-    const indexName = selectedIndex?.name || "";
+    const indexName = selectedIndex?.name || '';
 
     setCurrentIndex(indexName);
     setSelectedHit(null);
-    setDebugPreview(null);
     setShowDebug(false);
   };
 
-  const handleSelect = (hit: HitProps["hit"]) => {
+  const handleSelect = (hit: HitProps['hit']) => {
     setSelectedHit(hit);
-    const href = hit.url || "";
+    const href = hit.url || '';
     onModelSelect({
-      id: hit.id,
-      name: hit.title || hit.name || "",
+      id: hit.id || hit.objectID,
+      name: hit.title || hit.name || '',
       href,
       type: selectedModelType,
     });
     onClose();
   };
 
-  const handleConfirmSelection = () => {
-    if (debugPreview) {
-      onModelSelect(debugPreview);
-      onClose();
-      setDebugPreview(null);
-      setShowDebug(false);
-    }
-  };
-
   const handleClose = () => {
     onClose();
-    setDebugPreview(null);
     setShowDebug(false);
   };
 
@@ -127,7 +116,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
             {selectedModelType && currentIndex && !showDebug && (
               <InstantSearch
-                searchClient={searchClient}
+                searchClient={searchClient as SearchClient}
                 indexName={currentIndex}
                 routing={{
                   router: history({
@@ -145,7 +134,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
               >
                 <Configure
                   hitsPerPage={10}
-                  facets={["locale"]}
+                  facets={['locale']}
                   maxValuesPerFacet={10}
                   filters={regionalCareSiteFilter}
                 />
@@ -153,16 +142,16 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   <SearchBox
                     placeholder="Search..."
                     classNames={{
-                      root: "relative w-full",
-                      form: "relative",
+                      root: 'relative w-full',
+                      form: 'relative',
                       input:
-                        "w-full pl-4 pr-12 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                        'w-full pl-4 pr-12 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
                       submit:
-                        "absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-6 h-6",
-                      submitIcon: "w-5 h-5",
-                      reset: "hidden",
+                        'absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-6 h-6',
+                      submitIcon: 'w-5 h-5',
+                      reset: 'hidden',
                       loadingIndicator:
-                        "absolute right-3 top-1/2 -translate-y-1/2 text-gray-400",
+                        'absolute right-3 top-1/2 -translate-y-1/2 text-gray-400',
                     }}
                   />
                 </div>
@@ -176,16 +165,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                     <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
                       <Hits
                         classNames={{
-                          list: "divide-y divide-gray-200",
-                          item: "",
+                          list: 'divide-y divide-gray-200',
+                          item: '',
                         }}
                         hitComponent={({ hit }) => (
                           <Hit
                             hit={hit}
                             onSelect={handleSelect}
-                            isSelected={
-                              selectedHit?.objectID === hit.objectID
-                            }
+                            isSelected={selectedHit?.objectID === hit.objectID}
                           />
                         )}
                       />
@@ -193,14 +180,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                       <div className="py-2 px-4 border-t border-gray-200 bg-neutral-100">
                         <Pagination
                           classNames={{
-                            root: "flex justify-center",
-                            list: "inline-flex gap-1 rounded-md",
-                            item: "relative inline-flex items-center",
-                            link: "px-3 py-1 text-sm text-gray-500 bg-neutral-100 hover:bg-gray-50 border border-gray-300 rounded-md",
+                            root: 'flex justify-center',
+                            list: 'inline-flex gap-1 rounded-md',
+                            item: 'relative inline-flex items-center',
+                            link: 'px-3 py-1 text-sm text-gray-500 bg-neutral-100 hover:bg-gray-50 border border-gray-300 rounded-md',
                             selectedItem:
-                              "relative inline-flex items-center [&>a]:bg-blue-600 [&>a]:text-neutral-100 [&>a]:border-blue-600 [&>a]:hover:bg-blue-700",
+                              'relative inline-flex items-center [&>a]:bg-blue-600 [&>a]:text-neutral-100 [&>a]:border-blue-600 [&>a]:hover:bg-blue-700',
                             disabledItem:
-                              "relative inline-flex items-center opacity-50 cursor-not-allowed",
+                              'relative inline-flex items-center opacity-50 cursor-not-allowed',
                           }}
                           padding={1}
                           showFirst={false}

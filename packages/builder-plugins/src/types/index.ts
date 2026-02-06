@@ -7,11 +7,11 @@ export interface ClinicalTrial {
     identification?: {
       orgStudyId?: string;
     };
-    [key: string]: any;
+    [key: string]: unknown;
   };
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface CtDotGovStudy {
-  [key: string]: any;
+  [key: string]: unknown;
 }

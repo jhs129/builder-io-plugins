@@ -1,5 +1,5 @@
-import React from "react";
-import { useInstantSearch } from "react-instantsearch";
+import React from 'react';
+import { useInstantSearch } from 'react-instantsearch';
 
 export const NoResults: React.FC = () => {
   const { results } = useInstantSearch();

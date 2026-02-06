@@ -14,14 +14,21 @@ export interface HitProps {
     };
     media?: string;
   };
-  onSelect: (hit: HitProps["hit"]) => void;
+  onSelect: (hit: HitProps['hit']) => void;
   isSelected: boolean;
+}
+
+export interface ModelSelection {
+  id: string;
+  name: string;
+  href: string;
+  type: string;
 }
 
 export interface SearchModelSelectorProps {
   href?: string;
   referenceId?: string;
-  onModelSelect: (model: any) => void;
+  onModelSelect: (model: ModelSelection) => void;
   apiKey: string;
   appId: string;
   regionalCareSite?: RegionalCareSiteId;
@@ -44,9 +51,9 @@ export interface LocaleRefinementListProps {
 export interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
-  indexes: SearchModelSelectorProps["indexes"];
-  searchClient: any;
+  indexes: SearchModelSelectorProps['indexes'];
+  searchClient: unknown;
   locale: string;
   regionalCareSite?: RegionalCareSiteId;
-  onModelSelect: (model: any) => void;
+  onModelSelect: (model: ModelSelection) => void;
 }
