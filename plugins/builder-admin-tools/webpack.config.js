@@ -73,5 +73,5 @@ module.exports = {
       "Access-Control-Allow-Origin": "*",
     },
   },
-  plugins: [new Dotenv()],
+  plugins: [new Dotenv({ silent: true })],
 };

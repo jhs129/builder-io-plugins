@@ -48,8 +48,8 @@
     "tailwindcss": "^4.1.13",
     "typescript": "^5.0.0",
     "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.10.0"
+    "webpack-cli": "^5.1.0",
+    "webpack-dev-server": "^5.0.0"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
