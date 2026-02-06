@@ -123,42 +123,59 @@ export const useAdminApi = () => {
     try {
       setLoading(true);
       setError(null);
-      
-      // Use Builder.io v3 GraphQL API
-      const query = `query {
-        ${modelName} {
-          id
-          name
-          published
-          everything
+
+      // Builder.io v3 content GraphQL API uses camelCase field names for models
+      // e.g. "landing-page" becomes "landingPage" in the GraphQL schema
+      const graphqlFieldName = modelName.replace(/-([a-zA-Z0-9])/g, (_, c: string) => c.toUpperCase());
+
+      const allContent: PageContent[] = [];
+      const PAGE_SIZE = 100;
+      let offset = 0;
+
+      while (true) {
+        const query = `query {
+          ${graphqlFieldName}(limit: ${PAGE_SIZE}, offset: ${offset}) {
+            id
+            name
+            published
+            everything
+          }
+        }`;
+
+        const encodedQuery = encodeURIComponent(query);
+        const url = `https://cdn.builder.io/api/v3/graphql/${publicKey}?query=${encodedQuery}`;
+
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || result.errors) {
+          throw new Error(`GraphQL query failed: ${result.errors?.[0]?.message || response.statusText || 'Unknown error'}`);
         }
-      }`;
 
-      const encodedQuery = encodeURIComponent(query);
-      const url = `https://cdn.builder.io/api/v3/graphql/${publicKey}?query=${encodedQuery}`;
+        const content = result.data?.[graphqlFieldName] || [];
 
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
+        const pageContent = content.map((item: any) => ({
+          id: item.id,
+          name: item.name || 'Untitled',
+          published: item.published,
+          componentsUsed: extractComponentsUsed(item.everything),
+          lastPreviewUrl: item.everything?.meta?.lastPreviewUrl
+        }));
 
-      const result = await response.json();
-      
-      if (!response.ok || result.errors) {
-        throw new Error(`GraphQL query failed: ${result.errors?.[0]?.message || response.statusText || 'Unknown error'}`);
+        allContent.push(...pageContent);
+
+        // Stop if we got fewer items than the page size (no more pages)
+        if (content.length < PAGE_SIZE) break;
+        offset += PAGE_SIZE;
       }
 
-      const content = result.data?.[modelName] || [];
-      
-      return content.map((item: any) => ({
-        id: item.id,
-        name: item.name || 'Untitled',
-        published: item.published,
-        componentsUsed: extractComponentsUsed(item.everything),
-        lastPreviewUrl: item.everything?.meta?.lastPreviewUrl
-      }));
+      return allContent;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : String(err);
       setError(`Failed to fetch page content for ${modelName}: ${errorMessage}`);
@@ -191,17 +208,12 @@ const extractComponentsUsed = (everything: any): string[] => {
   // Also traverse the data structure to find components
   const traverse = (obj: any) => {
     if (!obj || typeof obj !== 'object') return;
-    
-    // Check if this object has a component property
-    if (obj.component && typeof obj.component === 'string') {
-      components.add(obj.component);
+
+    // Check if this is a Builder element with a component object (e.g. { name: "ProductSteps", options: {...} })
+    if (obj.component && typeof obj.component === 'object' && typeof obj.component.name === 'string') {
+      components.add(obj.component.name);
     }
-    
-    // Check if this object has a @type property (alternative component identifier)
-    if (obj['@type'] && typeof obj['@type'] === 'string') {
-      components.add(obj['@type']);
-    }
-    
+
     // Recursively traverse arrays and objects
     if (Array.isArray(obj)) {
       obj.forEach(traverse);
