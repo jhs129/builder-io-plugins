@@ -1,6 +1,6 @@
 {
   "name": "@jhsdc/builder-admin-tools",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Builder.io admin tools for model synchronization and content purging",
   "entry": "plugin",
   "output": "plugin.system.js",
