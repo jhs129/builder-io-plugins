@@ -140,22 +140,31 @@ const AdminToolsContent = () => {
   };
 
   const runComponentAudit = async () => {
-    const publicKey = appState.user.mainSpaceApiKey;
-    
-    if (!publicKey) {
-      setStatus("No main space API key found. Please ensure you're in a Builder.io space.");
-      return;
-    }
-    
-    const mainSpace = {
-      name: "Current Space",
-      publicKey: publicKey,
-      privateKey: "" // Not needed for component audit
-    };
-    
     setRunning(true);
     try {
-      const report = await componentAudit.runComponentAuditForModels(mainSpace, ['page', 'article']);
+      let report;
+      // Find a configured space with a private key for admin API model discovery
+      const configuredSpaceIndex = state.spaces.findIndex(s => s.privateKey);
+
+      if (configuredSpaceIndex >= 0) {
+        // Use configured space - dynamically discovers all page-kind models via admin API
+        const space = state.spaces[configuredSpaceIndex];
+        setSelectedSpaceIndex(configuredSpaceIndex);
+        report = await componentAudit.runComponentAudit(space);
+      } else {
+        // Fallback: use current space with default model names
+        const publicKey = appState.user.mainSpaceApiKey;
+        if (!publicKey) {
+          setStatus("No main space API key found. Please ensure you're in a Builder.io space.");
+          setRunning(false);
+          return;
+        }
+        report = await componentAudit.runComponentAuditForModels(
+          { name: "Current Space", publicKey, privateKey: "" },
+          ['page']
+        );
+      }
+
       if (report.length >= 0) {
         setCurrentView('componentAudit');
       }
@@ -269,6 +278,7 @@ const AdminToolsContent = () => {
         space={currentSpace}
         report={componentAudit.report}
         status={componentAudit.status}
+        auditedModels={componentAudit.auditedModels}
         onBack={() => setCurrentView('main')}
         onViewComponent={(componentName) => {
           setSelectedComponentName(componentName);

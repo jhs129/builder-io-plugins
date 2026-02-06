@@ -22,6 +22,7 @@ export const useComponentAudit = () => {
   const [report, setReport] = useState<ComponentUsageReport[]>([]);
   const [running, setRunning] = useState(false);
   const [status, setStatus] = useState('');
+  const [auditedModels, setAuditedModels] = useState<string[]>([]);
   const { getAvailableModels, getPageContent } = useAdminApi();
 
   const runComponentAudit = async (space: Space): Promise<ComponentUsageReport[]> => {
@@ -35,11 +36,14 @@ export const useComponentAudit = () => {
 
       if (pageModels.length === 0) {
         setStatus("No page models found in selected space");
+        setAuditedModels([]);
         setRunning(false);
         return [];
       }
 
-      setStatus(`Found ${pageModels.length} page model(s). Fetching content...`);
+      const modelNames = pageModels.map(m => m.name);
+      setAuditedModels(modelNames);
+      setStatus(`Found ${pageModels.length} page model(s): ${modelNames.join(', ')}. Fetching content...`);
 
       // Fetch content for each page model
       const allPages: PageContent[] = [];
@@ -70,6 +74,7 @@ export const useComponentAudit = () => {
   const runComponentAuditForModels = async (space: Space, modelNames: string[]): Promise<ComponentUsageReport[]> => {
     setRunning(true);
     setStatus("Analyzing component usage...");
+    setAuditedModels(modelNames);
 
     try {
       setStatus(`Fetching content from ${modelNames.join(', ')} models...`);
@@ -145,12 +150,14 @@ export const useComponentAudit = () => {
   const clearReport = () => {
     setReport([]);
     setStatus('');
+    setAuditedModels([]);
   };
 
   return {
     report,
     running,
     status,
+    auditedModels,
     runComponentAudit,
     runComponentAuditForModels,
     clearReport

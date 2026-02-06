@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { builder } from "@builder.io/react";
+import React, { useState, useEffect } from 'react';
+import { builder } from '@builder.io/react';
 
 interface HitProps {
   hit: {
@@ -11,7 +11,7 @@ interface HitProps {
       slug?: string;
     };
   };
-  onSelect: (hit: HitProps["hit"]) => void;
+  onSelect: (hit: HitProps['hit']) => void;
   isSelected: boolean;
 }
 
@@ -21,14 +21,19 @@ interface ContentSelectorProps {
     displayName: string;
   }[];
   apiKey: string;
-  onContentSelect: (content: any) => void;
+  onContentSelect: (content: {
+    id: string;
+    name: string;
+    type: string;
+    href: string;
+  }) => void;
   onClose: () => void;
 }
 
 const Hit = ({ hit, onSelect, isSelected }: HitProps) => (
   <div
     className={`py-2 px-4 border-b border-gray-200 odd:bg-neutral-100 even:bg-gray-50 hover:bg-blue-50 ${
-      isSelected ? "bg-blue-50" : ""
+      isSelected ? 'bg-blue-50' : ''
     }`}
   >
     <div className="flex items-center gap-3">
@@ -37,27 +42,31 @@ const Hit = ({ hit, onSelect, isSelected }: HitProps) => (
           {hit.name || hit.data?.title || hit.id}
         </h3>
         {hit.data?.url && (
-          <span className="text-gray-500 text-sm truncate">
-            {hit.data.url}
-          </span>
+          <span className="text-gray-500 text-sm truncate">{hit.data.url}</span>
         )}
       </div>
       <button
         onClick={() => onSelect(hit)}
         className={`shrink-0 px-3 py-1 text-sm font-medium rounded-md ml-auto ${
           isSelected
-            ? "bg-blue-600 text-neutral-100 hover:bg-blue-700"
-            : "bg-blue-600 text-neutral-100 hover:bg-blue-700"
+            ? 'bg-blue-600 text-neutral-100 hover:bg-blue-700'
+            : 'bg-blue-600 text-neutral-100 hover:bg-blue-700'
         }`}
-        aria-label={isSelected ? "Selected" : "Select"}
+        aria-label={isSelected ? 'Selected' : 'Select'}
       >
-        {isSelected ? "Selected" : "Select"}
+        {isSelected ? 'Selected' : 'Select'}
       </button>
     </div>
   </div>
 );
 
-const NoResults = ({ query, hasResults }: { query: string; hasResults: boolean }) => {
+const NoResults = ({
+  query,
+  hasResults,
+}: {
+  query: string;
+  hasResults: boolean;
+}) => {
   if (query && !hasResults) {
     return (
       <div className="p-4 text-center text-gray-500">
@@ -68,9 +77,7 @@ const NoResults = ({ query, hasResults }: { query: string; hasResults: boolean }
 
   if (!query && !hasResults) {
     return (
-      <div className="p-4 text-center text-gray-500">
-        No content found
-      </div>
+      <div className="p-4 text-center text-gray-500">No content found</div>
     );
   }
 
@@ -83,17 +90,17 @@ export const ContentSelector: React.FC<ContentSelectorProps> = ({
   apiKey,
   onClose,
 }) => {
-  const [selectedHit, setSelectedHit] = useState<HitProps["hit"] | null>(null);
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [selectedHit, setSelectedHit] = useState<HitProps['hit'] | null>(null);
+  const [searchResults, setSearchResults] = useState<HitProps['hit'][]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedModel, setSelectedModel] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedModel, setSelectedModel] = useState('');
 
   // Initialize builder when component mounts
   useEffect(() => {
     if (apiKey && !builder.apiKey) {
       builder.init(apiKey);
-      builder.apiVersion = "v3";
+      builder.apiVersion = 'v3';
     }
   }, [apiKey]);
 
@@ -103,49 +110,61 @@ export const ContentSelector: React.FC<ContentSelectorProps> = ({
       setIsLoading(true);
       builder
         .getAll(selectedModel, {
-          fields: "id,name,data.title,data.url,data.slug",
+          fields: 'id,name,data.title,data.url,data.slug',
           options: {
             noTargeting: true,
             includeRefs: true,
           },
         })
         .then((results) => {
-          setSearchResults(results);
+          setSearchResults(
+            results
+              .filter((r) => typeof r.id === 'string')
+              .map((r) => ({
+                id: r.id as string,
+                name: r.name,
+                data: r.data as HitProps['hit']['data'],
+              }))
+          );
         })
         .catch((error) => {
           setSearchResults([]);
-          console.error("Error loading initial content:", error);
+          console.error('Error loading initial content:', error);
         })
         .finally(() => setIsLoading(false));
     } else {
       setSearchResults([]);
     }
     setSelectedHit(null);
-    setSearchQuery("");
+    setSearchQuery('');
   }, [selectedModel, apiKey]);
 
   // Filter results based on search query
   const filteredResults = searchResults.filter((hit) => {
     if (!searchQuery) return true;
     const searchLower = searchQuery.toLowerCase();
-    const name = hit.name?.toLowerCase() || "";
-    const title = hit.data?.title?.toLowerCase() || "";
-    const url = hit.data?.url?.toLowerCase() || "";
-    return name.includes(searchLower) || title.includes(searchLower) || url.includes(searchLower);
+    const name = hit.name?.toLowerCase() || '';
+    const title = hit.data?.title?.toLowerCase() || '';
+    const url = hit.data?.url?.toLowerCase() || '';
+    return (
+      name.includes(searchLower) ||
+      title.includes(searchLower) ||
+      url.includes(searchLower)
+    );
   });
 
-  const handleSelect = (hit: HitProps["hit"]) => {
+  const handleSelect = (hit: HitProps['hit']) => {
     setSelectedHit(hit);
 
     // Generate href from the content data
-    let href = hit.data?.url || hit.data?.slug || "";
-    if (href && !href.startsWith("/")) {
-      href = "/" + href;
+    let href = hit.data?.url || hit.data?.slug || '';
+    if (href && !href.startsWith('/')) {
+      href = '/' + href;
     }
 
     onContentSelect({
       id: hit.id,
-      name: hit.name || hit.data?.title || "",
+      name: hit.name || hit.data?.title || '',
       type: selectedModel,
       href: href,
     });
@@ -234,7 +253,10 @@ export const ContentSelector: React.FC<ContentSelectorProps> = ({
                           ))}
                         </div>
                         {filteredResults.length === 0 && (
-                          <NoResults query={searchQuery} hasResults={searchResults.length > 0} />
+                          <NoResults
+                            query={searchQuery}
+                            hasResults={searchResults.length > 0}
+                          />
                         )}
                       </>
                     )}

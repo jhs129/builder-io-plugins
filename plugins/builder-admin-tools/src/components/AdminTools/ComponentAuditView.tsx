@@ -11,6 +11,7 @@ interface ComponentAuditViewProps {
   space: Space;
   report: ComponentUsageReport[];
   status: string;
+  auditedModels?: string[];
   onBack: () => void;
   onViewComponent: (componentName: string) => void;
 }
@@ -19,14 +20,18 @@ export const ComponentAuditView: React.FC<ComponentAuditViewProps> = ({
   space,
   report,
   status,
+  auditedModels = [],
   onBack,
   onViewComponent
 }) => {
   const [showBuilderComponents, setShowBuilderComponents] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredComponents = report.filter(component => 
-    showBuilderComponents || !component.componentName.startsWith('@builder.io')
-  );
+  const filteredComponents = report.filter(component => {
+    const matchesFilter = showBuilderComponents || !component.componentName.startsWith('@builder.io');
+    const matchesSearch = !searchQuery || component.componentName.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
 
   return (
     <div className="admin-tools-container">
@@ -56,7 +61,14 @@ export const ComponentAuditView: React.FC<ComponentAuditViewProps> = ({
         {/* Header */}
         <div className="admin-tools-header">
           <h1 className="admin-tools-title">Component Audit Report</h1>
-          <p className="admin-tools-subtitle">Component usage analysis for <strong>{space.name}</strong></p>
+          <p className="admin-tools-subtitle">
+            Component usage analysis for <strong>{space.name}</strong>
+            {auditedModels.length > 0 && (
+              <span style={{ display: 'block', fontSize: '13px', color: '#6b7280', marginTop: '4px' }}>
+                Models scanned: {auditedModels.join(', ')}
+              </span>
+            )}
+          </p>
         </div>
         
         {/* Report Card */}
@@ -109,6 +121,27 @@ export const ComponentAuditView: React.FC<ComponentAuditViewProps> = ({
                     Show all components
                   </label>
                 </div>
+              </div>
+
+              {/* Search Input */}
+              <div style={{ marginBottom: '16px' }}>
+                <input
+                  type="text"
+                  placeholder="Search components..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px',
+                    fontSize: '14px',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '6px',
+                    outline: 'none',
+                    boxSizing: 'border-box',
+                    color: '#374151',
+                    backgroundColor: 'white',
+                  }}
+                />
               </div>
             </div>
 

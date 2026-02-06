@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { liteClient as algoliasearch } from "algoliasearch/lite";
-import { SearchModelSelectorProps } from "./types";
-import { SearchModal } from "./SearchModal";
-
+import React, { useState } from 'react';
+import { liteClient as algoliasearch } from 'algoliasearch/lite';
+import { SearchModelSelectorProps } from './types';
+import { SearchModal } from './SearchModal';
 
 export const SearchModelSelector: React.FC<SearchModelSelectorProps> = ({
   href,
@@ -11,7 +10,7 @@ export const SearchModelSelector: React.FC<SearchModelSelectorProps> = ({
   appId,
   indexes,
   regionalCareSite,
-  locale = "en",
+  locale = 'en',
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

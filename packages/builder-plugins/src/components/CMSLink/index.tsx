@@ -35,7 +35,7 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
   const [href, setHref] = useState('');
   const [model, setModel] = useState('');
   const [referenceId, setReferenceId] = useState('');
-  const [selectedModel, setSelectedModel] = useState('');
+  const [, setSelectedModel] = useState('');
   const [isContentSelectorOpen, setIsContentSelectorOpen] = useState(false);
   const [selectedContentName, setSelectedContentName] = useState('');
   const [error, setError] = useState<{
@@ -147,7 +147,12 @@ export const CMSLink: React.FC<CMSLinkProps> = ({
     updateValue({ href: newHref });
   };
 
-  const handleContentSelect = (content: any) => {
+  const handleContentSelect = (content: {
+    href: string;
+    id: string;
+    type: string;
+    name: string;
+  }) => {
     setHref(content.href);
     setReferenceId(content.id);
     setModel(content.type);
